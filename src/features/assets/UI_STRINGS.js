@@ -3,4 +3,5 @@ export const UI_STRINGS = {
 	LOADING: "Loading",
 	SUCESS: "Success",
 	BUY: "Buy",
+	SIGN_UP: "Sign up",
 };

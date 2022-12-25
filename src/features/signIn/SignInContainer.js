@@ -1,20 +1,21 @@
-import { Box, Button, Grid, TextField } from "@mui/material";
+import { Box, Snackbar } from "@mui/material";
 import { memo, useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { UI_STRINGS } from "../assets/UI_STRINGS";
-import StatusComponent from "../common/StatusComponent";
 import { useNavigate } from "react-router-dom";
 import {
 	selectSignInLoading,
-	selectSignInSuccess,
+	selectSignInMessage,
 	selectSignInUser,
 	signInAsyncThunk,
+	signUpAsyncThunk,
 } from "./SignInSlice";
 import { isAuthenticated } from "../../service/isAuthenticated";
+import SignInComponent from "./components/SignInComponent";
 
 const SignInContainer = () => {
 	const loading = useSelector(selectSignInLoading);
-	const success = useSelector(selectSignInSuccess);
+	const message = useSelector(selectSignInMessage);
+	const [signUpSnackbar, setSignUpSnackbar] = useState(false);
 	const user = useSelector(selectSignInUser);
 	const [username, setUsername] = useState();
 	const [password, setPassword] = useState();
@@ -23,8 +24,13 @@ const SignInContainer = () => {
 
 	const onSignInClick = useCallback(() => {
 		if (!loading && username && password) {
-			console.log(username, password);
 			dispatch(signInAsyncThunk({ username, password }));
+		}
+	}, [username, password, loading, dispatch]);
+
+	const onSignUpClick = useCallback(() => {
+		if (!loading && username && password) {
+			dispatch(signUpAsyncThunk({ username, password }));
 		}
 	}, [username, password, loading, dispatch]);
 
@@ -34,6 +40,12 @@ const SignInContainer = () => {
 		}
 	}, [user, navigate]);
 
+	useEffect(() => {
+		if (message !== "") setSignUpSnackbar(true);
+	}, [message]);
+
+	const handleSnackbarClose = () => setSignUpSnackbar(false);
+
 	return (
 		<Box
 			sx={{
@@ -42,46 +54,19 @@ const SignInContainer = () => {
 				height: "100vh",
 			}}
 		>
-			{!loading && !success && (
-				<Grid container spacing={2}>
-					<Grid container spacing={4} justifyContent="center">
-						<h1>{UI_STRINGS.SIGN_IN}</h1>
-					</Grid>
-					<Grid item xs={12}>
-						<TextField
-							onChange={(event) => setUsername(event.target.value)}
-							id="username"
-							label="username"
-							variant="outlined"
-							fullWidth
-						/>
-					</Grid>
-					<Grid item xs={12}>
-						<TextField
-							onChange={(event) => setPassword(event.target.value)}
-							id="password"
-							label="Password"
-							variant="outlined"
-							fullWidth
-						/>
-					</Grid>
-					<Grid item xs={12}>
-						<Button
-							onClick={onSignInClick}
-							disabled={!username || !password}
-							variant="contained"
-							fullWidth
-						>
-							{UI_STRINGS.SIGN_IN}
-						</Button>
-					</Grid>
-				</Grid>
-			)}
-			{loading && !success && (
-				<StatusComponent
-					message={loading && !success ? UI_STRINGS.LOADING : UI_STRINGS.SUCESS}
-				/>
-			)}
+			<SignInComponent
+				setUsername={setUsername}
+				setPassword={setPassword}
+				onSignInClick={onSignInClick}
+				onSignUpClick={onSignUpClick}
+				isButtonDisabled={!username || !password}
+			/>
+			<Snackbar
+				open={signUpSnackbar}
+				autoHideDuration={3000}
+				onClose={handleSnackbarClose}
+				message={message}
+			/>
 		</Box>
 	);
 };

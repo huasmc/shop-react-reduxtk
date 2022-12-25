@@ -30,6 +30,8 @@ export const post = async (url, body) => {
 		.then((response) => {
 			if (response.ok) {
 				return response;
+			} else if (response.status === 409) {
+				return response;
 			} else {
 				throw new Error();
 			}
@@ -38,6 +40,6 @@ export const post = async (url, body) => {
 			if (data) return data;
 		})
 		.catch((error) => {
-			throw new Error();
+			throw new Error(error);
 		});
 };

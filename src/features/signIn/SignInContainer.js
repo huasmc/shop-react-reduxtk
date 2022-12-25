@@ -6,13 +6,15 @@ import StatusComponent from "../common/StatusComponent";
 import { useNavigate } from "react-router-dom";
 import {
 	selectSignInLoading,
+	selectSignInSuccess,
 	selectSignInUser,
 	signInAsyncThunk,
 } from "./SignInSlice";
+import { isAuthenticated } from "../../service/isAuthenticated";
 
 const SignInContainer = () => {
 	const loading = useSelector(selectSignInLoading);
-	const success = useSelector(selectSignInLoading);
+	const success = useSelector(selectSignInSuccess);
 	const user = useSelector(selectSignInUser);
 	const [username, setUsername] = useState();
 	const [password, setPassword] = useState();
@@ -20,13 +22,16 @@ const SignInContainer = () => {
 	const dispatch = useDispatch();
 
 	const onSignInClick = useCallback(() => {
-		if (username && password) {
+		if (!loading && username && password) {
+			console.log(username, password);
 			dispatch(signInAsyncThunk({ username, password }));
 		}
-	}, [username, password, dispatch]);
+	}, [username, password, loading, dispatch]);
 
 	useEffect(() => {
-		if (user) navigate("/shop");
+		if (user && isAuthenticated(user.access_token)) {
+			navigate("/shop");
+		}
 	}, [user, navigate]);
 
 	return (

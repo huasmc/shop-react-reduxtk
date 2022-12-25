@@ -3,7 +3,10 @@ import { ENDPOINTS } from "../../service/constants";
 import { post } from "../../service/rest";
 
 export const signInAsyncThunk = createAsyncThunk("sign-in", async (body) => {
-	const response = await post(ENDPOINTS.SIGN_IN, body);
+	const response = await post(ENDPOINTS.SIGN_IN, {
+		username: body.username,
+		password: body.password,
+	});
 	const data = await response.json();
 	return data;
 });
@@ -23,6 +26,7 @@ const signInSlice = createSlice({
 			state.user = payload;
 		});
 		builder.addCase(signInAsyncThunk.rejected, (state, action) => {
+			state.loading = false;
 			state.success = false;
 		});
 	},

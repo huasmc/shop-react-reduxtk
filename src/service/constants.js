@@ -4,4 +4,5 @@ export const SHOP_BASE_URL = "https://dummyjson.com";
 export const ENDPOINTS = {
 	SIGN_IN: `${NEST_BASE_URL}/users/sign-in`,
 	SHOP_PRODUCTS: `${SHOP_BASE_URL}/products?`,
+	IS_AUTHENTICATED: `${NEST_BASE_URL}/users/authenticated`,
 };

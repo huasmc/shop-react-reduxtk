@@ -1,5 +1,7 @@
-export const get = async (url, queryParams) => {
-	return await fetch(url + new URLSearchParams(queryParams))
+export const get = async (url, queryParams, token) => {
+	return await fetch(url + new URLSearchParams(queryParams), {
+		headers: { Authorization: `Bearer ${token}` },
+	})
 		.then((response) => {
 			if (response.ok) {
 				return response;
@@ -7,8 +9,8 @@ export const get = async (url, queryParams) => {
 				throw new Error();
 			}
 		})
-		.then((data) => {
-			if (data) return data;
+		.then((response) => {
+			if (response) return response;
 		})
 		.catch((error) => {
 			throw new Error();

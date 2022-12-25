@@ -6,5 +6,8 @@ export const paths = [
 		path: "/",
 		element: <SignInContainer />,
 	},
-	{ path: "/shop", element: <ShopContainer /> },
+	{
+		path: "/shop",
+		element: <ShopContainer />,
+	},
 ];

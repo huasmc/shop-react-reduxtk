@@ -10,7 +10,7 @@ export const signInAsyncThunk = createAsyncThunk("sign-in", async (body) => {
 
 const signInSlice = createSlice({
 	name: "signIn",
-	initialState: { loading: false, success: null },
+	initialState: { loading: false, success: null, user: null },
 	reducers: {},
 	extraReducers: (builder) => {
 		builder.addCase(signInAsyncThunk.pending, (state, action) => {
@@ -19,6 +19,8 @@ const signInSlice = createSlice({
 		builder.addCase(signInAsyncThunk.fulfilled, (state, action) => {
 			state.loading = false;
 			state.success = true;
+			const { payload } = action;
+			state.user = payload;
 		});
 		builder.addCase(signInAsyncThunk.rejected, (state, action) => {
 			state.success = false;
@@ -28,4 +30,5 @@ const signInSlice = createSlice({
 
 export const selectSignInLoading = (state) => state.signInReducer.loading;
 export const selectSignInSuccess = (state) => state.signInReducer.success;
+export const selectSignInUser = (state) => state.signInReducer.user;
 export default signInSlice.reducer;

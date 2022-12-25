@@ -14,13 +14,11 @@ const root = createRoot(container);
 const router = createBrowserRouter(paths);
 
 root.render(
-	<React.StrictMode>
-		<Provider store={store}>
-			<Container maxWidth="sm">
-				<RouterProvider router={router} />
-			</Container>
-		</Provider>
-	</React.StrictMode>
+	<Provider store={store}>
+		<Container maxWidth="sm">
+			<RouterProvider router={router} />
+		</Container>
+	</Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function

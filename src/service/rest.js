@@ -1,5 +1,5 @@
-export const get = async (url) => {
-	return await fetch(url)
+export const get = async (url, queryParams) => {
+	return await fetch(url + new URLSearchParams(queryParams))
 		.then((response) => {
 			if (response.ok) {
 				return response;

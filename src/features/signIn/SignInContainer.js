@@ -1,20 +1,34 @@
 import { Box, Button, Grid, TextField } from "@mui/material";
-import { memo, useState } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectSignInLoading, signInAsyncThunk } from "./SignInSlice";
+import { UI_STRINGS } from "../assets/UI_STRINGS";
+import StatusComponent from "../common/StatusComponent";
+import { useNavigate } from "react-router-dom";
+import {
+	selectSignInLoading,
+	selectSignInUser,
+	signInAsyncThunk,
+} from "./SignInSlice";
 
 const SignInContainer = () => {
 	const loading = useSelector(selectSignInLoading);
 	const success = useSelector(selectSignInLoading);
+	const user = useSelector(selectSignInUser);
 	const [username, setUsername] = useState();
 	const [password, setPassword] = useState();
+	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
-	const onSignInClick = () => {
+	const onSignInClick = useCallback(() => {
 		if (username && password) {
 			dispatch(signInAsyncThunk({ username, password }));
 		}
-	};
+	}, [username, password, dispatch]);
+
+	useEffect(() => {
+		if (user) navigate("/shop");
+	}, [user, navigate]);
+
 	return (
 		<Box
 			sx={{
@@ -26,7 +40,7 @@ const SignInContainer = () => {
 			{!loading && !success && (
 				<Grid container spacing={2}>
 					<Grid container spacing={4} justifyContent="center">
-						<h1>Sign-in</h1>
+						<h1>{UI_STRINGS.SIGN_IN}</h1>
 					</Grid>
 					<Grid item xs={12}>
 						<TextField
@@ -53,20 +67,15 @@ const SignInContainer = () => {
 							variant="contained"
 							fullWidth
 						>
-							Sign-in
+							{UI_STRINGS.SIGN_IN}
 						</Button>
 					</Grid>
 				</Grid>
 			)}
 			{loading && !success && (
-				<Grid container spacing={2}>
-					<h1>Loading</h1>
-				</Grid>
-			)}
-			{success && (
-				<Grid container spacing={2}>
-					<h1>Success</h1>
-				</Grid>
+				<StatusComponent
+					message={loading && !success ? UI_STRINGS.LOADING : UI_STRINGS.SUCESS}
+				/>
 			)}
 		</Box>
 	);

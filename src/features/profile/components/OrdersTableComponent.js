@@ -55,19 +55,14 @@ const OrderRowComponent = ({ order, skipOrders, limit }) => {
 		}
 	}, []);
 
-	const getProduct = useCallback(
-		async (event) => {
-			const request = await get(
-				ENDPOINTS.SHOP_PRODUCTS + `/${order.product_id}`
-			);
-			const requestedProduct = request.json();
-			requestedProduct.then((item) => {
-				setProduct(item);
-				dispatch(setAppLoading(false));
-			});
-		},
-		[order, dispatch]
-	);
+	const getProduct = useCallback(async () => {
+		const request = await get(ENDPOINTS.SHOP_PRODUCTS + `/${order.product_id}`);
+		const requestedProduct = request.json();
+		requestedProduct.then((item) => {
+			setProduct(item);
+			dispatch(setAppLoading(false));
+		});
+	}, [order, dispatch]);
 
 	useEffect(() => {
 		getProduct();
@@ -97,6 +92,7 @@ const OrderRowComponent = ({ order, skipOrders, limit }) => {
 							text={UI_STRINGS.DELETE}
 							handleClick={handleDeleteOrder}
 							disabled={user.activeRole === ROLES[1]}
+							tooltip={UI_STRINGS.ADMIN_ROLE_REQUIRED}
 						/>
 					</TableCell>
 				</TableRow>

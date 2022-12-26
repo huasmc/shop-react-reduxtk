@@ -7,7 +7,6 @@ import {
 	TableCell,
 	TableBody,
 	Pagination,
-	Button,
 	TextField,
 	Grid,
 } from "@mui/material";
@@ -16,6 +15,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { UI_STRINGS } from "../../assets/UI_STRINGS";
 import { createOrderAsyncThunk, selectProducts } from "../ShopSlice";
 import { selectSignInUser } from "../../signIn/SignInSlice";
+import AppButton from "../../common/AppButton";
+import { ROLES } from "../../assets/roles";
 
 const TableHeaders = ["", "Title", "Quantity", "Price"];
 
@@ -26,9 +27,9 @@ const ProductRowComponent = ({ product }) => {
 
 	const handleCreateOrder = useCallback(
 		(product) => {
-			if (product && quantity) {
+			if (product && quantity && user.activeRole !== ROLES[1]) {
 				const body = { product_id: product.id, quantity, user_id: user._id };
-				dispatch(createOrderAsyncThunk(body));
+				dispatch(createOrderAsyncThunk(body, dispatch));
 			}
 		},
 		[quantity, user, dispatch]
@@ -55,9 +56,12 @@ const ProductRowComponent = ({ product }) => {
 				<h3>${product.price.toLocaleString()}</h3>
 			</TableCell>
 			<TableCell>
-				<Button onClick={() => handleCreateOrder(product)} variant="contained">
-					{UI_STRINGS.BUY}
-				</Button>
+				<AppButton
+					text={UI_STRINGS.BUY}
+					handleClick={handleCreateOrder}
+					disabled={user.activeRole !== ROLES[1]}
+					tooltip={UI_STRINGS.USER_ROLE_REQUIRED}
+				/>
 			</TableCell>
 		</TableRow>
 	);

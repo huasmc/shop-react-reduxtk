@@ -1,4 +1,4 @@
-import { Button, CssBaseline } from "@mui/material";
+import { Button, CssBaseline, Tooltip } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 
 import { red } from "@mui/material/colors";
@@ -9,18 +9,22 @@ const theme = createTheme({
 	},
 });
 
-export default function AppButton({ text, handleClick, disabled }) {
+export default function AppButton({ text, handleClick, tooltip, disabled }) {
 	return (
 		<ThemeProvider theme={theme}>
 			<CssBaseline enableColorScheme />
-			<Button
-				onClick={handleClick}
-				variant="contained"
-				disabled={disabled}
-				color="primary"
-			>
-				{text}
-			</Button>
+			<Tooltip title={tooltip}>
+				<span>
+					<Button
+						onClick={handleClick}
+						variant="contained"
+						disabled={disabled}
+						color="primary"
+					>
+						{text}
+					</Button>
+				</span>
+			</Tooltip>
 		</ThemeProvider>
 	);
 }

@@ -2,10 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const appSlice = createSlice({
 	name: "app",
-	initialState: { snackbarMessage: "" },
+	initialState: { snackbarMessage: [] },
 	reducers: {
 		setSnackbarMessage: (state, action) => {
-			state.snackbarMessage = action.payload;
+			const { payload } = action;
+			state.snackbarMessage.push(payload);
 		},
 	},
 });

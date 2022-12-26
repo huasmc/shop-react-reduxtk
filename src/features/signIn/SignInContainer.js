@@ -3,6 +3,7 @@ import { memo, useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
+	selectSignInLoading,
 	selectSignInMessage,
 	selectSignInUser,
 	signInAsyncThunk,
@@ -39,9 +40,7 @@ const SignInContainer = () => {
 	}, [user, navigate]);
 
 	useEffect(() => {
-		if (!isAuthenticated()) {
-			dispatch(setSnackbarMessage(message));
-		}
+		if (message !== "") dispatch(setSnackbarMessage(message));
 	}, [message, dispatch]);
 
 	return (

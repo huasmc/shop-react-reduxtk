@@ -1,11 +1,11 @@
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
-import { memo, useEffect, useState } from "react";
+import { memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setSnackbarMessage } from "../../AppSlice";
-import { ROLES } from "../assets/roles";
 import { UI_STRINGS } from "../assets/UI_STRINGS";
 import { selectSignInUser, setSignInActiveRole } from "../signIn/SignInSlice";
 import { addRoleAsyncThunk } from "./thunks/AddRoleAsyncThunk";
+import withAuth from "../auth/WithAuth";
 
 const RoleSelector = () => {
 	const { user } = useSelector(selectSignInUser);
@@ -26,7 +26,7 @@ const RoleSelector = () => {
 			<InputLabel id="role-selector">{UI_STRINGS.USER_ROLE}</InputLabel>
 			<Select
 				labelId="role-selector"
-				value={user.activeRole}
+				value={user && user.activeRole}
 				label="Role"
 				onChange={onChange}
 			>
@@ -41,4 +41,4 @@ const RoleSelector = () => {
 	);
 };
 
-export default memo(RoleSelector);
+export default memo(withAuth(RoleSelector));

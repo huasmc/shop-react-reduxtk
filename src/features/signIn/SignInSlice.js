@@ -43,8 +43,10 @@ const signInSlice = createSlice({
 		builder.addCase(signInAsyncThunk.fulfilled, (state, action) => {
 			state.loading = false;
 			const { payload } = action;
+			console.log(payload);
 			if (payload.statusCode) state.message = payload.message;
 			else if (payload.access_token && payload.user) {
+				state.message = UI_STRINGS.SUCCESS;
 				localStorage.setItem("access_token", payload.access_token);
 				const { user } = payload;
 				state.user = user;

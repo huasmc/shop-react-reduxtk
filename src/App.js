@@ -1,5 +1,5 @@
 import { Box, Grid, Snackbar } from "@mui/material";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import "./App.css";
@@ -10,14 +10,20 @@ import { paths } from "./features/router/paths";
 const router = createBrowserRouter(paths);
 
 function App() {
-	const message = useSelector(selectSnackbarMessage);
+	const messages = useSelector(selectSnackbarMessage);
 	const [snackbarOpen, setSnackbarOpen] = useState(false);
+	const previousMessages = useRef(messages);
 
 	const handleSnackbarClose = useCallback(() => setSnackbarOpen(false), []);
 
 	useEffect(() => {
-		if (message) setSnackbarOpen(true);
-	}, [message]);
+		const isNewMessage =
+			JSON.stringify(previousMessages.current) !== JSON.stringify(messages);
+		if (messages.length > 0 && isNewMessage) {
+			setSnackbarOpen(true);
+			previousMessages.current = messages;
+		}
+	}, [messages]);
 
 	return (
 		<>
@@ -36,7 +42,7 @@ function App() {
 				open={snackbarOpen}
 				autoHideDuration={3000}
 				onClose={handleSnackbarClose}
-				message={message}
+				message={messages[messages.length - 1]}
 			/>
 		</>
 	);

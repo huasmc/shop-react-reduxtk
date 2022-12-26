@@ -9,6 +9,7 @@ import {
 import OrdersTableComponent from "./components/OrdersTableComponent";
 import { Box, Grid } from "@mui/material";
 import RoleSelector from "../roleSelector/RoleSelector";
+import { setAppLoading } from "../../AppSlice";
 
 const Profile = () => {
 	const { user } = useSelector(selectSignInUser);
@@ -18,14 +19,14 @@ const Profile = () => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
+		dispatch(setAppLoading(true));
+		const body = {
+			user_id: user._id,
+			skipOrders,
+			limit,
+		};
 		if (user) {
-			dispatch(
-				getUserOrders({
-					user_id: user._id,
-					skipOrders,
-					limit,
-				})
-			);
+			dispatch(getUserOrders(body));
 		}
 	}, [user, skipOrders, limit, dispatch]);
 

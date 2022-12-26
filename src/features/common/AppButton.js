@@ -1,7 +1,7 @@
 import { Button, CssBaseline } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 
-import { red, green } from "@mui/material/colors";
+import { red } from "@mui/material/colors";
 
 const theme = createTheme({
 	palette: {

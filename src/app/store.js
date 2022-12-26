@@ -1,9 +1,9 @@
 import { composeWithDevTools } from "redux-devtools-extension";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { persistStore, persistReducer } from "redux-persist";
-import storage from "redux-persist/lib/storage";
 import signInReducer from "../features/signIn/SignInSlice";
 import shopReducer from "../features/shop/ShopSlice";
+import storage from "redux-persist/lib/storage";
 import appReducer from "../AppSlice";
 
 const persistConfig = {

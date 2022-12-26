@@ -15,23 +15,45 @@ import {
 import { UI_STRINGS } from "../../assets/UI_STRINGS";
 import { get } from "../../../service/rest";
 import { ENDPOINTS } from "../../../service/constants";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectSignInUser } from "../../signIn/SignInSlice";
 import { ROLES } from "../../assets/roles";
 import AppButton from "../../common/AppButton";
+import { updateOrderAsyncThunk } from "../thunks/ProfileAsyncThunks";
+import { setAppLoading, setSnackbarMessage } from "../../../AppSlice";
 
 const OrderRowComponent = ({ order }) => {
 	const { user } = useSelector(selectSignInUser);
 	const [product, setProduct] = useState();
+	const dispatch = useDispatch();
 
 	const handleDeleteOrder = useCallback(() => {}, []);
-	const handleUpdateQuantity = useCallback(() => {}, []);
 
-	const getProduct = useCallback(async () => {
-		const request = await get(ENDPOINTS.SHOP_PRODUCTS + `/${order.product_id}`);
-		const requestedProduct = await request.json();
-		setProduct(requestedProduct);
-	}, [order]);
+	const handleUpdateQuantity = useCallback((event) => {
+		const body = {
+			_id: order._id,
+			quantity: event.target.value,
+		};
+		try {
+			dispatch(updateOrderAsyncThunk(body, dispatch));
+		} catch (error) {
+			dispatch(setSnackbarMessage(UI_STRINGS.REQUEST_STATUS.REJECTED));
+		}
+	}, []);
+
+	const getProduct = useCallback(
+		async (event) => {
+			const request = await get(
+				ENDPOINTS.SHOP_PRODUCTS + `/${order.product_id}`
+			);
+			const requestedProduct = request.json();
+			requestedProduct.then((item) => {
+				setProduct(item);
+				dispatch(setAppLoading(false));
+			});
+		},
+		[order, dispatch]
+	);
 
 	useEffect(() => {
 		getProduct();
@@ -95,7 +117,8 @@ const OrdersTableComponent = ({ ordersObject, limit, setSkipOrders }) => {
 							</TableRow>
 						</TableHead>
 						<TableBody>
-							{orders.length > 0 &&
+							{orders &&
+								orders.length > 0 &&
 								orders.map((order) => (
 									<OrderRowComponent key={order._id} order={order} />
 								))}

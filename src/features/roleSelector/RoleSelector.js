@@ -1,24 +1,18 @@
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setSnackbarMessage } from "../../AppSlice";
 import { UI_STRINGS } from "../assets/UI_STRINGS";
-import { selectSignInUser, setSignInActiveRole } from "../signIn/SignInSlice";
-import { addRoleAsyncThunk } from "./thunks/AddRoleAsyncThunk";
+import { selectSignInUser } from "../signIn/SignInSlice";
+import { addRoleAsyncThunk } from "./thunks/RoleAsyncThunk";
 import withAuth from "../auth/WithAuth";
 
 const RoleSelector = () => {
 	const { user } = useSelector(selectSignInUser);
 	const dispatch = useDispatch();
 
-	const onChange = async (event) => {
-		const isSuccess = await dispatch(addRoleAsyncThunk({ user_id: user._id }));
-		if (isSuccess) {
-			dispatch(setSnackbarMessage(UI_STRINGS.SUCCESS));
-			dispatch(setSignInActiveRole(event.target.value));
-		} else if (isSuccess.message) {
-			dispatch(setSnackbarMessage(isSuccess.message));
-		}
+	const onChange = (event) => {
+		const activeRole = event.target.value;
+		dispatch(addRoleAsyncThunk({ user_id: user._id, activeRole }, dispatch));
 	};
 
 	return (

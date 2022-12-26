@@ -1,17 +1,19 @@
-import { Box, Grid, Snackbar } from "@mui/material";
+import { Box, Grid, Snackbar, Backdrop, CircularProgress } from "@mui/material";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import "./App.css";
-import { selectSnackbarMessage } from "./AppSlice";
+import { selectAppLoading, selectSnackbarMessage } from "./AppSlice";
 import Navigator from "./features/navigator/Navigator";
 import { paths } from "./features/router/paths";
 
 const router = createBrowserRouter(paths);
 
 function App() {
-	const messages = useSelector(selectSnackbarMessage);
 	const [snackbarOpen, setSnackbarOpen] = useState(false);
+	const [backdropLoading, setBackdropLoading] = useState(false);
+	const messages = useSelector(selectSnackbarMessage);
+	const loading = useSelector(selectAppLoading);
 	const previousMessages = useRef(messages);
 
 	const handleSnackbarClose = useCallback(() => setSnackbarOpen(false), []);
@@ -24,6 +26,14 @@ function App() {
 			previousMessages.current = messages;
 		}
 	}, [messages]);
+
+	useEffect(() => {
+		setBackdropLoading(loading);
+	}, [loading]);
+
+	useEffect(() => {
+		setBackdropLoading(false);
+	}, []);
 
 	return (
 		<>
@@ -44,6 +54,12 @@ function App() {
 				onClose={handleSnackbarClose}
 				message={messages[messages.length - 1]}
 			/>
+			<Backdrop
+				sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+				open={backdropLoading}
+			>
+				<CircularProgress color="inherit" />
+			</Backdrop>
 		</>
 	);
 }

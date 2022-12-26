@@ -26,7 +26,6 @@ const OrderRowComponent = ({ order }) => {
 	const getProduct = useCallback(async () => {
 		const request = await get(ENDPOINTS.SHOP_PRODUCTS + `/${order.product_id}`);
 		const requestedProduct = await request.json();
-		console.log(requestedProduct);
 		setProduct(requestedProduct);
 	}, [order]);
 

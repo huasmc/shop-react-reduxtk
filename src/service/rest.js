@@ -60,3 +60,27 @@ export const post = async (url, body) => {
 			throw new Error(error);
 		});
 };
+
+export const put = async (url, body) => {
+	return await fetch(url, {
+		method: "PUT",
+		mode: "cors",
+		headers: buildHeaders(),
+		body: JSON.stringify(body),
+	})
+		.then((response) => {
+			if (response.ok) {
+				return response;
+			} else if (response_status.includes(response.status)) {
+				return response;
+			} else {
+				throw new Error();
+			}
+		})
+		.then((data) => {
+			if (data) return data;
+		})
+		.catch((error) => {
+			throw new Error(error);
+		});
+};

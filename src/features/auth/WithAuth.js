@@ -11,10 +11,10 @@ const withAuth = (Component) => {
 		const navigate = useNavigate();
 
 		useEffect(() => {
-			if (!isAuthenticated() || !user) {
+			if ((location && !isAuthenticated()) || !user) {
 				if (location.pathname !== "/") navigate("/");
 			}
-		}, [location.pathname, user, navigate]);
+		}, [location, user, navigate]);
 
 		if (!isAuthenticated) {
 			return null;

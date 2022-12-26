@@ -7,4 +7,6 @@ export const ENDPOINTS = {
 	SIGN_UP: `${NEST_BASE_URL}/users/register`,
 	ADD_ORDER: `${NEST_BASE_URL}/orders/add`,
 	USER_ORDERS: `${NEST_BASE_URL}/orders/user`,
+	ADD_ROLE: `${NEST_BASE_URL}/users/add-admin-role`,
+	PROFILE: `${NEST_BASE_URL}/users/profile`,
 };

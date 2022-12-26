@@ -129,6 +129,12 @@ const OrdersTableComponent = ({
 		},
 		[setPage, setSkipOrders]
 	);
+
+	const getPageCount = () => {
+		const count = ordersObject.count / limit;
+		const roundCount = Math.round(count);
+		return !isNaN(roundCount) ? roundCount : 5;
+	};
 	return (
 		<>
 			<Grid>
@@ -160,7 +166,7 @@ const OrdersTableComponent = ({
 					</Table>
 				</TableContainer>
 				<Pagination
-					count={Math.round(ordersObject.count / limit)}
+					count={getPageCount()}
 					onChange={handlePageChange}
 					page={page}
 				/>

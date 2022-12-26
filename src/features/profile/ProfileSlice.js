@@ -4,8 +4,8 @@ import { get, post } from "../../service/rest";
 
 export const getUserOrders = createAsyncThunk(
 	"profile/orders",
-	async (queryParams) => {
-		const response = await get(ENDPOINTS.SHOP_PRODUCTS, queryParams);
+	async (body) => {
+		const response = await get(ENDPOINTS.SHOP_PRODUCTS, body);
 		const data = await response.json();
 		console.log(data);
 		return data;

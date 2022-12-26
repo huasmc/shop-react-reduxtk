@@ -26,7 +26,7 @@ const signInSlice = createSlice({
 			state.loading = false;
 			const { payload } = action;
 			if (payload.statusCode) state.message = payload.message;
-			else if (payload.access_token) {
+			else if (payload.access_token && payload.user) {
 				state.message = UI_STRINGS.SUCESS;
 				localStorage.setItem("access_token", payload.access_token);
 				state.user = payload;

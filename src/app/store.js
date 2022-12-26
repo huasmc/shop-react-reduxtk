@@ -3,7 +3,6 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import signInReducer from "../features/signIn/SignInSlice";
-import profileReducer from "../features/profile/ProfileSlice";
 import shopReducer from "../features/shop/ShopSlice";
 import appReducer from "../AppSlice";
 
@@ -16,7 +15,6 @@ const rootReducer = combineReducers({
 	signInReducer,
 	shopReducer,
 	appReducer,
-	profileReducer,
 });
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 

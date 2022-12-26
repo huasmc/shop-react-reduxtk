@@ -1,8 +1,11 @@
 import { memo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import withAuth from "../auth/WithAuth";
-import { selectSignInUser } from "../signIn/SignInSlice";
-import { getUserOrders, selectUserOrders } from "./ProfileSlice";
+import {
+	getUserOrders,
+	selectSignInUser,
+	selectUserOrders,
+} from "../signIn/SignInSlice";
 import OrdersTableComponent from "./components/OrdersTableComponent";
 import { Box, Grid } from "@mui/material";
 import RoleSelector from "../roleSelector/RoleSelector";
@@ -40,11 +43,13 @@ const Profile = () => {
 						<RoleSelector />
 					</Grid>
 					<Grid item row={1} xs={12}>
-						<OrdersTableComponent
-							ordersObject={orders}
-							limit={limit}
-							setSkipOrders={setSkipOrders}
-						/>
+						{orders && (
+							<OrdersTableComponent
+								ordersObject={orders}
+								limit={limit}
+								setSkipOrders={setSkipOrders}
+							/>
+						)}
 					</Grid>
 				</Grid>
 			</Box>

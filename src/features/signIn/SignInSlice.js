@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { ENDPOINTS } from "../../service/constants";
-import { post } from "../../service/rest";
+import { get, post } from "../../service/rest";
 import { ROLES } from "../assets/roles";
 import { UI_STRINGS } from "../assets/UI_STRINGS";
 
@@ -18,6 +18,15 @@ export const profileAsyncThunk = createAsyncThunk("profile", async (body) => {
 	const response = await post(ENDPOINTS.PROFILE, body);
 	return await response.json();
 });
+
+export const getUserOrders = createAsyncThunk(
+	"profile/orders",
+	async (queryParams) => {
+		const response = await get(ENDPOINTS.USER_ORDERS + "?", queryParams);
+		const data = await response.json();
+		return data;
+	}
+);
 
 const signInSlice = createSlice({
 	name: "signIn",
@@ -54,11 +63,23 @@ const signInSlice = createSlice({
 			state.user = payload;
 		});
 		builder.addCase(signUpAsyncThunk.rejected, (state, action) => {});
+		builder.addCase(getUserOrders.pending, (state, action) => {
+			state.loading = true;
+		});
+		builder.addCase(getUserOrders.fulfilled, (state, action) => {
+			state.loading = false;
+			state.orders = action.payload;
+		});
+		builder.addCase(getUserOrders.rejected, (state, action) => {
+			state.loading = false;
+		});
 	},
 });
 
 export const selectSignInLoading = (state) => state.signInReducer.loading;
 export const selectSignInUser = (state) => state.signInReducer;
 export const selectSignInMessage = (state) => state.signInReducer.message;
+export const selectUserOrders = (state) => state.signInReducer.orders;
+
 export const { setSignInActiveRole } = signInSlice.actions;
 export default signInSlice.reducer;

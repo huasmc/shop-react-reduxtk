@@ -54,7 +54,10 @@ const signInSlice = createSlice({
 				else state.user.activeRole = ROLES[1];
 			}
 		});
-		builder.addCase(signInAsyncThunk.rejected, (state, action) => {});
+		builder.addCase(signInAsyncThunk.rejected, (state, action) => {
+			state.loading = false;
+			state.message = UI_STRINGS.NOT_AUTHORIZED;
+		});
 		builder.addCase(signUpAsyncThunk.pending, (state, action) => {
 			state.message = UI_STRINGS.REQUEST_STATUS.LOADING;
 		});

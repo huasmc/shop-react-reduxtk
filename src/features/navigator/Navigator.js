@@ -1,8 +1,11 @@
 import { Grid, Link } from "@mui/material";
 import { memo } from "react";
+import { UI_STRINGS } from "../assets/UI_STRINGS";
 import { paths } from "../router/paths";
 
 const Navigator = () => {
+	const endSession = () => localStorage.clear();
+
 	return (
 		<Grid
 			container
@@ -18,6 +21,17 @@ const Navigator = () => {
 						</span>
 					</Link>
 				))}
+				<Link
+					href="/"
+					style={{
+						color: "darkred",
+					}}
+					onClick={endSession}
+				>
+					<span style={{ margin: "10px", fontSize: "27px" }}>
+						{UI_STRINGS.LOG_OUT}
+					</span>
+				</Link>
 			</Grid>
 		</Grid>
 	);

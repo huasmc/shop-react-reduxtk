@@ -15,4 +15,5 @@ export const UI_STRINGS = {
 	YOUR_ORDERS: "Your orders go here",
 	USER_ROLE_REQUIRED: "User role required",
 	ADMIN_ROLE_REQUIRED: "Admin role required",
+	LOG_OUT: "Log-out",
 };

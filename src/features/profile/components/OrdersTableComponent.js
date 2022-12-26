@@ -22,7 +22,7 @@ import AppButton from "../../common/AppButton";
 import { updateOrderAsyncThunk } from "../thunks/ProfileAsyncThunks";
 import { setAppLoading, setSnackbarMessage } from "../../../AppSlice";
 
-const OrderRowComponent = ({ order }) => {
+const OrderRowComponent = ({ order, skipOrders, limit }) => {
 	const { user } = useSelector(selectSignInUser);
 	const [product, setProduct] = useState();
 	const dispatch = useDispatch();
@@ -33,6 +33,9 @@ const OrderRowComponent = ({ order }) => {
 		const body = {
 			_id: order._id,
 			quantity: event.target.value,
+			user,
+			skipOrders,
+			limit,
 		};
 		try {
 			dispatch(updateOrderAsyncThunk(body, dispatch));
@@ -93,7 +96,12 @@ const OrderRowComponent = ({ order }) => {
 
 const TableHeaders = ["", "Title", "Quantity", "Price"];
 
-const OrdersTableComponent = ({ ordersObject, limit, setSkipOrders }) => {
+const OrdersTableComponent = ({
+	ordersObject,
+	skipOrders,
+	limit,
+	setSkipOrders,
+}) => {
 	const [page, setPage] = useState(1);
 	const { orders } = ordersObject;
 
@@ -120,7 +128,12 @@ const OrdersTableComponent = ({ ordersObject, limit, setSkipOrders }) => {
 							{orders &&
 								orders.length > 0 &&
 								orders.map((order) => (
-									<OrderRowComponent key={order._id} order={order} />
+									<OrderRowComponent
+										key={order._id}
+										order={order}
+										skipOrders={skipOrders}
+										limit={limit}
+									/>
 								))}
 						</TableBody>
 					</Table>

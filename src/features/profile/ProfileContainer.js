@@ -47,6 +47,7 @@ const Profile = () => {
 						{orders && (
 							<OrdersTableComponent
 								ordersObject={orders}
+								skipOrders={skipOrders}
 								limit={limit}
 								setSkipOrders={setSkipOrders}
 							/>

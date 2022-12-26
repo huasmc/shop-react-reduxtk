@@ -5,6 +5,7 @@ import { UI_STRINGS } from "../assets/UI_STRINGS";
 import { selectSignInUser } from "../signIn/SignInSlice";
 import { addRoleAsyncThunk } from "./thunks/RoleAsyncThunk";
 import withAuth from "../auth/WithAuth";
+import { ROLES } from "../assets/roles";
 
 const RoleSelector = () => {
 	const { user } = useSelector(selectSignInUser);
@@ -24,12 +25,11 @@ const RoleSelector = () => {
 				label="Role"
 				onChange={onChange}
 			>
-				{user &&
-					user.roles.map((userRole) => (
-						<MenuItem key={userRole} value={userRole}>
-							{userRole}
-						</MenuItem>
-					))}
+				{ROLES.map((userRole) => (
+					<MenuItem key={userRole} value={userRole}>
+						{userRole}
+					</MenuItem>
+				))}
 			</Select>
 		</FormControl>
 	);

@@ -25,15 +25,12 @@ const ProductRowComponent = ({ product }) => {
 	const [quantity, setQuantity] = useState(1);
 	const dispatch = useDispatch();
 
-	const handleCreateOrder = useCallback(
-		(product) => {
-			if (product && quantity && user.activeRole !== ROLES[1]) {
-				const body = { product_id: product.id, quantity, user_id: user._id };
-				dispatch(createOrderAsyncThunk(body, dispatch));
-			}
-		},
-		[quantity, user, dispatch]
-	);
+	const handleCreateOrder = useCallback(() => {
+		if (product && quantity && user.activeRole !== ROLES[0]) {
+			const body = { product_id: product.id, quantity, user_id: user._id };
+			dispatch(createOrderAsyncThunk(body, dispatch));
+		}
+	}, [product, quantity, user, dispatch]);
 	return (
 		<TableRow>
 			<TableCell align="left">

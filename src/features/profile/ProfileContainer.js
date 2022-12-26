@@ -26,7 +26,7 @@ const Profile = () => {
 			limit,
 		};
 		if (user) {
-			dispatch(getUserOrders(body));
+			dispatch(getUserOrders(body, dispatch));
 		}
 	}, [user, skipOrders, limit, dispatch]);
 

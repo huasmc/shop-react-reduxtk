@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { setAppLoading } from "../../AppSlice";
 import { ENDPOINTS } from "../../service/constants";
 import { get, post } from "../../service/rest";
 import { ROLES } from "../assets/roles";
@@ -21,9 +22,10 @@ export const profileAsyncThunk = createAsyncThunk("profile", async (body) => {
 
 export const getUserOrders = createAsyncThunk(
 	"profile/orders",
-	async (queryParams) => {
+	async (queryParams, { dispatch }) => {
 		const response = await get(ENDPOINTS.USER_ORDERS + "?", queryParams);
 		const data = await response.json();
+		dispatch(setAppLoading(false));
 		return data;
 	}
 );

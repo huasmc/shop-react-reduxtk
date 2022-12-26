@@ -1,21 +1,25 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { setAppLoading, setSnackbarMessage } from "../../AppSlice";
 import { ENDPOINTS } from "../../service/constants";
 import { get, post } from "../../service/rest";
+import { UI_STRINGS } from "../assets/UI_STRINGS";
 
 export const getProductsAsyncThunk = createAsyncThunk(
 	"shop/products",
-	async (queryParams) => {
+	async (queryParams, { dispatch }) => {
 		const response = await get(ENDPOINTS.SHOP_PRODUCTS + "?", queryParams);
 		const data = await response.json();
+		dispatch(setAppLoading(false));
 		return data;
 	}
 );
 
 export const createOrderAsyncThunk = createAsyncThunk(
 	"shop/buy",
-	async (body) => {
+	async (body, { dispatch }) => {
 		const response = await post(ENDPOINTS.ADD_ORDER, body);
 		const data = await response.json();
+		dispatch(setSnackbarMessage(UI_STRINGS.SUCCESS));
 		return data;
 	}
 );

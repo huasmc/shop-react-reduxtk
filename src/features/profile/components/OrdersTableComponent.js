@@ -9,15 +9,19 @@ import {
 	TableCell,
 	TableBody,
 	Pagination,
-	Button,
 	TextField,
 	Grid,
 } from "@mui/material";
 import { UI_STRINGS } from "../../assets/UI_STRINGS";
 import { get } from "../../../service/rest";
 import { ENDPOINTS } from "../../../service/constants";
+import { useSelector } from "react-redux";
+import { selectSignInUser } from "../../signIn/SignInSlice";
+import { ROLES } from "../../assets/roles";
+import AppButton from "../../common/AppButton";
 
 const OrderRowComponent = ({ order }) => {
+	const { user } = useSelector(selectSignInUser);
 	const [product, setProduct] = useState();
 
 	const handleDeleteOrder = useCallback(() => {}, []);
@@ -53,13 +57,11 @@ const OrderRowComponent = ({ order }) => {
 					</TableCell>
 					<TableCell align="left">{<h3>${product.price}</h3>}</TableCell>
 					<TableCell>
-						<Button
-							onClick={handleDeleteOrder}
-							variant="contained"
-							style={{ backgroundColor: "darkred" }}
-						>
-							{UI_STRINGS.DELETE}
-						</Button>
+						<AppButton
+							text={UI_STRINGS.DELETE}
+							handleClick={handleDeleteOrder}
+							disabled={user.activeRole === ROLES[1]}
+						/>
 					</TableCell>
 				</TableRow>
 			)}

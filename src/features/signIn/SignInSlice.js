@@ -25,7 +25,11 @@ const signInSlice = createSlice({
 		builder.addCase(signInAsyncThunk.fulfilled, (state, action) => {
 			state.loading = false;
 			const { payload } = action;
-			state.user = payload;
+			if (payload.statusCode) state.message = payload.message;
+			else if (payload.access_token) {
+				state.message = UI_STRINGS.SUCESS;
+				state.user = payload;
+			}
 		});
 		builder.addCase(signInAsyncThunk.rejected, (state, action) => {
 			state.loading = false;
@@ -44,7 +48,6 @@ const signInSlice = createSlice({
 		});
 		builder.addCase(signUpAsyncThunk.rejected, (state, action) => {
 			state.loading = false;
-			console.log(action);
 			state.success = false;
 		});
 	},

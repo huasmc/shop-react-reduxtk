@@ -4,4 +4,6 @@ export const UI_STRINGS = {
 	SUCESS: "Success",
 	BUY: "Buy",
 	SIGN_UP: "Sign up",
+	SHOP: "Shop",
+	NOT_AUTHORIZED: "Not authroized",
 };

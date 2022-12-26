@@ -4,20 +4,15 @@ import { Provider } from "react-redux";
 import { store } from "./app/store";
 import reportWebVitals from "./reportWebVitals";
 import "./index.css";
-import { paths } from "./features/router/paths";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { Container } from "@mui/material";
+
+import App from "./App";
 
 const container = document.getElementById("root");
 const root = createRoot(container);
 
-const router = createBrowserRouter(paths);
-
 root.render(
 	<Provider store={store}>
-		<Container maxWidth="sm">
-			<RouterProvider router={router} />
-		</Container>
+		<App />
 	</Provider>
 );
 

@@ -1,4 +1,4 @@
-import { Box, Snackbar } from "@mui/material";
+import { Box } from "@mui/material";
 import { memo, useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -11,11 +11,11 @@ import {
 } from "./SignInSlice";
 import { isAuthenticated } from "../../service/isAuthenticated";
 import SignInComponent from "./components/SignInComponent";
+import { setSnackbarMessage } from "../../AppSlice";
 
 const SignInContainer = () => {
 	const loading = useSelector(selectSignInLoading);
 	const message = useSelector(selectSignInMessage);
-	const [signUpSnackbar, setSignUpSnackbar] = useState(false);
 	const user = useSelector(selectSignInUser);
 	const [username, setUsername] = useState();
 	const [password, setPassword] = useState();
@@ -41,10 +41,8 @@ const SignInContainer = () => {
 	}, [user, navigate]);
 
 	useEffect(() => {
-		if (message !== "") setSignUpSnackbar(true);
-	}, [message]);
-
-	const handleSnackbarClose = () => setSignUpSnackbar(false);
+		if (message !== "") dispatch(setSnackbarMessage(message));
+	}, [message, dispatch]);
 
 	return (
 		<Box
@@ -60,12 +58,6 @@ const SignInContainer = () => {
 				onSignInClick={onSignInClick}
 				onSignUpClick={onSignUpClick}
 				isButtonDisabled={!username || !password}
-			/>
-			<Snackbar
-				open={signUpSnackbar}
-				autoHideDuration={3000}
-				onClose={handleSnackbarClose}
-				message={message}
 			/>
 		</Box>
 	);

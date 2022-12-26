@@ -1,3 +1,4 @@
+const response_status = [409, 401];
 export const get = async (url, queryParams, token) => {
 	return await fetch(url + new URLSearchParams(queryParams), {
 		headers: { Authorization: `Bearer ${token}` },
@@ -30,7 +31,7 @@ export const post = async (url, body) => {
 		.then((response) => {
 			if (response.ok) {
 				return response;
-			} else if (response.status === 409) {
+			} else if (response_status.includes(response.status)) {
 				return response;
 			} else {
 				throw new Error();

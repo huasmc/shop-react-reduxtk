@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import ProductsTableComponent from "./components/ProductsTableComponent";
 import { getProductsAsyncThunk } from "./ShopSlice";
 import { Box } from "@mui/material";
+import withAuth from "../auth/WithAuth";
 
 const ShopContainer = () => {
 	const [skipProducts, setSkipProducts] = useState(0);
@@ -31,4 +32,4 @@ const ShopContainer = () => {
 	);
 };
 
-export default memo(ShopContainer);
+export default memo(withAuth(ShopContainer));

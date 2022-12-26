@@ -69,6 +69,7 @@ const signInSlice = createSlice({
 		builder.addCase(signUpAsyncThunk.rejected, (state, action) => {});
 		builder.addCase(getUserOrders.pending, (state, action) => {
 			state.loading = true;
+			state.orders = [];
 		});
 		builder.addCase(getUserOrders.fulfilled, (state, action) => {
 			state.loading = false;

@@ -9,12 +9,19 @@ import appReducer from "../AppSlice";
 const persistConfig = {
 	key: "root",
 	storage,
+	blacklist: ["signInReducer"],
+};
+
+const persistSignInConfig = {
+	key: "signIn",
+	storage,
+	blacklist: ["orders"],
 };
 
 const rootReducer = combineReducers({
-	signInReducer,
-	shopReducer,
-	appReducer,
+	signInReducer: persistReducer(persistSignInConfig, signInReducer),
+	shopReducer: shopReducer,
+	appReducer: appReducer,
 });
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 

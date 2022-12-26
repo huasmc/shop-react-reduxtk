@@ -11,6 +11,7 @@ import {
 	Pagination,
 	TextField,
 	Grid,
+	Tooltip,
 } from "@mui/material";
 import { UI_STRINGS } from "../../assets/UI_STRINGS";
 import { get } from "../../../service/rest";
@@ -38,7 +39,7 @@ const OrderRowComponent = ({ order, skipOrders, limit }) => {
 			limit,
 		};
 		if (order._id) dispatch(deleteOrderAsyncThunk(body));
-	}, []);
+	}, [order, user, skipOrders, limit, dispatch]);
 
 	const handleUpdateQuantity = useCallback((event) => {
 		const body = {
@@ -78,13 +79,22 @@ const OrderRowComponent = ({ order, skipOrders, limit }) => {
 
 					<TableCell align="left">{<h3>{product.title}</h3>}</TableCell>
 					<TableCell align="left">
-						<TextField
-							type="number"
-							onChange={handleUpdateQuantity}
-							placeholder="Qty"
-							style={{ width: "70px" }}
-							defaultValue={order.quantity}
-						/>
+						<Tooltip
+							title={
+								user.activeRole === ROLES[1]
+									? UI_STRINGS.ADMIN_ROLE_REQUIRED
+									: ""
+							}
+						>
+							<TextField
+								type="number"
+								onChange={handleUpdateQuantity}
+								placeholder="Qty"
+								style={{ width: "70px" }}
+								disabled={user.activeRole === ROLES[1]}
+								defaultValue={order.quantity}
+							/>
+						</Tooltip>
 					</TableCell>
 					<TableCell align="left">{<h3>${product.price}</h3>}</TableCell>
 					<TableCell>

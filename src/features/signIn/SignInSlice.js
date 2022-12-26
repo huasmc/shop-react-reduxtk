@@ -28,6 +28,7 @@ const signInSlice = createSlice({
 			if (payload.statusCode) state.message = payload.message;
 			else if (payload.access_token) {
 				state.message = UI_STRINGS.SUCESS;
+				localStorage.setItem("access_token", payload.access_token);
 				state.user = payload;
 			}
 		});

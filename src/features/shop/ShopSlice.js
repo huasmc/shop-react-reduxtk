@@ -1,11 +1,21 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { ENDPOINTS } from "../../service/constants";
-import { get } from "../../service/rest";
+import { get, post } from "../../service/rest";
 
 export const getProductsAsyncThunk = createAsyncThunk(
 	"shop/products",
 	async (queryParams) => {
 		const response = await get(ENDPOINTS.SHOP_PRODUCTS, queryParams);
+		const data = await response.json();
+		console.log(data);
+		return data;
+	}
+);
+
+export const createOrderAsyncThunk = createAsyncThunk(
+	"shop/buy",
+	async (body) => {
+		const response = await post(ENDPOINTS.ADD_ORDER, body);
 		const data = await response.json();
 		return data;
 	}

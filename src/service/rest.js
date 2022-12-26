@@ -1,7 +1,26 @@
 const response_status = [409, 401];
+
+const buildHeaders = () => {
+	const access_token = localStorage.getItem("access_token");
+	if (access_token) {
+		return {
+			Accept: "application/json",
+			"Content-Type": "application/json",
+			"Access-Control-Allow-Origin": "*",
+			Authorization: `Bearer ${access_token}`,
+		};
+	} else {
+		return {
+			Accept: "application/json",
+			"Access-Control-Allow-Origin": "*",
+			"Content-Type": "application/json",
+		};
+	}
+};
+
 export const get = async (url, queryParams, token) => {
 	return await fetch(url + new URLSearchParams(queryParams), {
-		headers: { Authorization: `Bearer ${token}` },
+		headers: buildHeaders(),
 	})
 		.then((response) => {
 			if (response.ok) {
@@ -22,10 +41,7 @@ export const post = async (url, body) => {
 	return await fetch(url, {
 		method: "POST",
 		mode: "cors",
-		headers: {
-			Accept: "application/json",
-			"Content-Type": "application/json",
-		},
+		headers: buildHeaders(),
 		body: JSON.stringify(body),
 	})
 		.then((response) => {

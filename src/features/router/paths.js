@@ -1,3 +1,4 @@
+import ProfileContainer from "../profile/ProfileContainer";
 import ShopContainer from "../shop/ShopContainer";
 import SignInContainer from "../signIn/SignInContainer";
 
@@ -11,5 +12,10 @@ export const paths = [
 		title: "Shop",
 		path: "/shop",
 		element: <ShopContainer />,
+	},
+	{
+		title: "Profile",
+		path: "/profile",
+		element: <ProfileContainer />,
 	},
 ];

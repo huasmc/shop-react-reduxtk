@@ -14,6 +14,7 @@ function App() {
 	const handleSnackbarClose = () => setSnackbarOpen(false);
 
 	const [snackbarOpen, setSnackbarOpen] = useState(false);
+
 	useEffect(() => {
 		if (message) setSnackbarOpen(true);
 	}, [message]);

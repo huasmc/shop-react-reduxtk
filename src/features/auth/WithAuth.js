@@ -6,15 +6,15 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 const withAuth = (Component) => {
 	return function AuthenticatedComponent(props) {
-		const user = useSelector(selectSignInUser);
+		const access_token = localStorage.getItem("access_token");
 		const location = useLocation();
 		const navigate = useNavigate();
 
 		useEffect(() => {
-			if (!user || !isAuthenticated(user.access_token)) {
+			if (!access_token || !isAuthenticated(access_token)) {
 				if (location.pathname !== "/") navigate("/");
 			}
-		}, [user, location.pathname, navigate]);
+		}, [access_token, location.pathname, navigate]);
 
 		if (!isAuthenticated) {
 			return null;

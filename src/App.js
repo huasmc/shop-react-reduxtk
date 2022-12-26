@@ -1,5 +1,5 @@
 import { Box, Grid, Snackbar } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import "./App.css";
@@ -11,9 +11,9 @@ const router = createBrowserRouter(paths);
 
 function App() {
 	const message = useSelector(selectSnackbarMessage);
-	const handleSnackbarClose = () => setSnackbarOpen(false);
-
 	const [snackbarOpen, setSnackbarOpen] = useState(false);
+
+	const handleSnackbarClose = useCallback(() => setSnackbarOpen(false), []);
 
 	useEffect(() => {
 		if (message) setSnackbarOpen(true);

@@ -5,9 +5,8 @@ import { get, post } from "../../service/rest";
 export const getProductsAsyncThunk = createAsyncThunk(
 	"shop/products",
 	async (queryParams) => {
-		const response = await get(ENDPOINTS.SHOP_PRODUCTS, queryParams);
+		const response = await get(ENDPOINTS.SHOP_PRODUCTS + "?", queryParams);
 		const data = await response.json();
-		console.log(data);
 		return data;
 	}
 );

@@ -9,12 +9,12 @@ import {
 	Pagination,
 	Button,
 	TextField,
+	Grid,
 } from "@mui/material";
-import { memo, useState } from "react";
+import { memo, useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { UI_STRINGS } from "../../assets/UI_STRINGS";
 import { createOrderAsyncThunk, selectProducts } from "../ShopSlice";
-import { Grid } from "@mui/material";
 import { selectSignInUser } from "../../signIn/SignInSlice";
 
 const TableHeaders = ["", "Title", "Quantity", "Price"];
@@ -24,12 +24,15 @@ const ProductRowComponent = ({ product }) => {
 	const [quantity, setQuantity] = useState(1);
 	const dispatch = useDispatch();
 
-	const handleCreateOrder = (product) => {
-		if (product && quantity) {
-			const body = { product_id: product.id, quantity, user_id: user._id };
-			dispatch(createOrderAsyncThunk(body));
-		}
-	};
+	const handleCreateOrder = useCallback(
+		(product) => {
+			if (product && quantity) {
+				const body = { product_id: product.id, quantity, user_id: user._id };
+				dispatch(createOrderAsyncThunk(body));
+			}
+		},
+		[quantity, user, dispatch]
+	);
 	return (
 		<TableRow>
 			<TableCell align="left">
@@ -64,10 +67,13 @@ const ProductsTableComponent = ({ setSkipProducts, purchase }) => {
 	const products = useSelector(selectProducts);
 	const [page, setPage] = useState(1);
 
-	const handlePageChange = (event, newPage) => {
-		setSkipProducts(newPage * 5 - 5);
-		setPage(newPage);
-	};
+	const handlePageChange = useCallback(
+		(event, newPage) => {
+			setSkipProducts(newPage * 5 - 5);
+			setPage(newPage);
+		},
+		[setPage, setSkipProducts]
+	);
 
 	return (
 		<Grid>

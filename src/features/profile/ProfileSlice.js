@@ -1,13 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { ENDPOINTS } from "../../service/constants";
-import { get, post } from "../../service/rest";
+import { get } from "../../service/rest";
 
 export const getUserOrders = createAsyncThunk(
 	"profile/orders",
 	async (body) => {
-		const response = await get(ENDPOINTS.SHOP_PRODUCTS, body);
+		const response = await get(ENDPOINTS.USER_ORDERS + "?", body);
 		const data = await response.json();
-		console.log(data);
 		return data;
 	}
 );
@@ -22,8 +21,7 @@ const profileSlice = createSlice({
 		});
 		builder.addCase(getUserOrders.fulfilled, (state, action) => {
 			state.loading = false;
-			state.total = action.payload.total;
-			state.products = action.payload.products;
+			state.orders = action.payload;
 		});
 		builder.addCase(getUserOrders.rejected, (state, action) => {
 			state.loading = false;

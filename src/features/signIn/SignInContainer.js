@@ -41,7 +41,9 @@ const SignInContainer = () => {
 	}, [user, navigate]);
 
 	useEffect(() => {
-		if (message !== "") dispatch(setSnackbarMessage(message));
+		if (!isAuthenticated()) {
+			dispatch(setSnackbarMessage(message));
+		}
 	}, [message, dispatch]);
 
 	return (

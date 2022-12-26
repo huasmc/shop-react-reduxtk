@@ -2,16 +2,25 @@ import { memo, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import withAuth from "../auth/WithAuth";
 import { selectSignInUser } from "../signIn/SignInSlice";
-import { getUserOrders } from "./ProfileSlice";
+import { getUserOrders, selectUserOrders } from "./ProfileSlice";
+import OrdersTableComponent from "./components/OrdersTableComponent";
 
 const Profile = () => {
-	const user = useSelector(selectSignInUser);
+	const orders = useSelector(selectUserOrders);
+	const { user } = useSelector(selectSignInUser);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		if (user) dispatch(getUserOrders, { user_id: user.id });
+		if (user) {
+			dispatch(getUserOrders({ user_id: user._id }));
+		}
 	}, [user, dispatch]);
-	return <></>;
+
+	return (
+		<>
+			<OrdersTableComponent orders={orders} />
+		</>
+	);
 };
 
 export default memo(withAuth(Profile));

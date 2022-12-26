@@ -35,6 +35,10 @@ function App() {
 		setBackdropLoading(false);
 	}, []);
 
+	window.onload = () => {
+		setBackdropLoading(false);
+	};
+
 	return (
 		<>
 			<Box sx={{ flexGrow: 1 }}>

@@ -1,4 +1,4 @@
-import { memo, useEffect } from "react";
+import { memo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import withAuth from "../auth/WithAuth";
 import { selectSignInUser } from "../signIn/SignInSlice";
@@ -8,15 +8,23 @@ import { Box, Grid } from "@mui/material";
 import RoleSelector from "../roleSelector/RoleSelector";
 
 const Profile = () => {
-	const orders = useSelector(selectUserOrders);
 	const { user } = useSelector(selectSignInUser);
+	const [skipOrders, setSkipOrders] = useState(0);
+	const [limit, setLimit] = useState(5);
+	const orders = useSelector(selectUserOrders);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
 		if (user) {
-			dispatch(getUserOrders({ user_id: user._id }));
+			dispatch(
+				getUserOrders({
+					user_id: user._id,
+					skipOrders,
+					limit,
+				})
+			);
 		}
-	}, [user, dispatch]);
+	}, [user, skipOrders, limit, dispatch]);
 
 	return (
 		<>
@@ -32,7 +40,11 @@ const Profile = () => {
 						<RoleSelector />
 					</Grid>
 					<Grid item row={1} xs={12}>
-						<OrdersTableComponent orders={orders} />
+						<OrdersTableComponent
+							ordersObject={orders}
+							limit={limit}
+							setSkipOrders={setSkipOrders}
+						/>
 					</Grid>
 				</Grid>
 			</Box>

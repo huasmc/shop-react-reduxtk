@@ -4,8 +4,8 @@ import { get } from "../../service/rest";
 
 export const getUserOrders = createAsyncThunk(
 	"profile/orders",
-	async (body) => {
-		const response = await get(ENDPOINTS.USER_ORDERS + "?", body);
+	async (queryParams) => {
+		const response = await get(ENDPOINTS.USER_ORDERS + "?", queryParams);
 		const data = await response.json();
 		return data;
 	}

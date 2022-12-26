@@ -5,6 +5,5 @@ import { put } from "../../../service/rest";
 export const addRoleAsyncThunk = createAsyncThunk("add-role", async (body) => {
 	const response = await put(ENDPOINTS.ADD_ROLE, body);
 	const jsonResponse = await response.json();
-	console.log(jsonResponse);
 	return await jsonResponse;
 });

@@ -18,9 +18,10 @@ const buildHeaders = () => {
 	}
 };
 
-export const get = async (url, queryParams, token) => {
+export const get = async (url, queryParams, body) => {
 	return await fetch(url + new URLSearchParams(queryParams), {
 		headers: buildHeaders(),
+		body: body,
 	})
 		.then((response) => {
 			if (response.ok) {
@@ -33,7 +34,7 @@ export const get = async (url, queryParams, token) => {
 			if (response) return response;
 		})
 		.catch((error) => {
-			throw new Error();
+			throw new Error(error);
 		});
 };
 

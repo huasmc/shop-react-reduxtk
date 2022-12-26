@@ -63,7 +63,7 @@ const ProductRowComponent = ({ product }) => {
 	);
 };
 
-const ProductsTableComponent = ({ setSkipProducts, purchase }) => {
+const ProductsTableComponent = ({ setSkipProducts }) => {
 	const products = useSelector(selectProducts);
 	const [page, setPage] = useState(1);
 

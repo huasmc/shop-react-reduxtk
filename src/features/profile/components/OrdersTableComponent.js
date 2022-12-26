@@ -69,16 +69,17 @@ const OrderRowComponent = ({ order }) => {
 
 const TableHeaders = ["", "Title", "Quantity", "Price"];
 
-const OrdersTableComponent = ({ orders }) => {
+const OrdersTableComponent = ({ ordersObject, limit, setSkipOrders }) => {
 	const [page, setPage] = useState(1);
+	const { orders } = ordersObject;
 
 	const handlePageChange = useCallback(
 		(event, newPage) => {
+			setSkipOrders(newPage * 5 - 5);
 			setPage(newPage);
 		},
-		[setPage]
+		[setPage, setSkipOrders]
 	);
-
 	return (
 		<>
 			<Grid>
@@ -93,14 +94,14 @@ const OrdersTableComponent = ({ orders }) => {
 						</TableHead>
 						<TableBody>
 							{orders.length > 0 &&
-								[orders[1]].map((order) => (
+								orders.map((order) => (
 									<OrderRowComponent key={order._id} order={order} />
 								))}
 						</TableBody>
 					</Table>
 				</TableContainer>
 				<Pagination
-					count={orders.length}
+					count={Math.round(ordersObject.count / limit)}
 					onChange={handlePageChange}
 					page={page}
 				/>

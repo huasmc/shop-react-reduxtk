@@ -14,8 +14,6 @@ const ShopContainer = () => {
 		dispatch(getProductsAsyncThunk(queryParams));
 	}, [skipProducts, dispatch]);
 
-	const purchase = useCallback(() => {}, []);
-
 	return (
 		<Box
 			sx={{
@@ -24,10 +22,7 @@ const ShopContainer = () => {
 				height: "100vh",
 			}}
 		>
-			<ProductsTableComponent
-				setSkipProducts={setSkipProducts}
-				purchase={purchase}
-			/>
+			<ProductsTableComponent setSkipProducts={setSkipProducts} />
 		</Box>
 	);
 };

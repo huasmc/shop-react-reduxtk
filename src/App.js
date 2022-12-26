@@ -1,4 +1,4 @@
-import { Container, Snackbar } from "@mui/material";
+import { Box, Grid, Snackbar } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
@@ -19,16 +19,25 @@ function App() {
 	}, [message]);
 
 	return (
-		<Container maxWidth="sm">
-			<Navigator />
-			<RouterProvider router={router} />
+		<>
+			<Box sx={{ flexGrow: 1 }}>
+				<Grid container spacing={2} justifyContent="center">
+					<Grid item row={1} xs={12}>
+						<Navigator />
+					</Grid>
+					<Grid item row={2}>
+						<RouterProvider router={router} />
+					</Grid>
+				</Grid>
+			</Box>
+
 			<Snackbar
 				open={snackbarOpen}
 				autoHideDuration={3000}
 				onClose={handleSnackbarClose}
 				message={message}
 			/>
-		</Container>
+		</>
 	);
 }
 

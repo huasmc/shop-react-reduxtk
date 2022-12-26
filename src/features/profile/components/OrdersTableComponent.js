@@ -93,7 +93,7 @@ const OrdersTableComponent = ({ orders }) => {
 							</TableRow>
 						</TableHead>
 						<TableBody>
-							{orders &&
+							{orders.length > 0 &&
 								[orders[1]].map((order) => (
 									<OrderRowComponent key={order._id} order={order} />
 								))}

@@ -12,4 +12,5 @@ export const UI_STRINGS = {
 		REJECTED: "Rejected",
 		LOADING: "Loading",
 	},
+	YOUR_ORDERS: "Your orders go here",
 };

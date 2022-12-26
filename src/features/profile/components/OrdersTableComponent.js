@@ -19,7 +19,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectSignInUser } from "../../signIn/SignInSlice";
 import { ROLES } from "../../assets/roles";
 import AppButton from "../../common/AppButton";
-import { updateOrderAsyncThunk } from "../thunks/ProfileAsyncThunks";
+import {
+	deleteOrderAsyncThunk,
+	updateOrderAsyncThunk,
+} from "../thunks/ProfileAsyncThunks";
 import { setAppLoading, setSnackbarMessage } from "../../../AppSlice";
 
 const OrderRowComponent = ({ order, skipOrders, limit }) => {
@@ -27,7 +30,15 @@ const OrderRowComponent = ({ order, skipOrders, limit }) => {
 	const [product, setProduct] = useState();
 	const dispatch = useDispatch();
 
-	const handleDeleteOrder = useCallback(() => {}, []);
+	const handleDeleteOrder = useCallback(() => {
+		const body = {
+			order_id: order._id,
+			user,
+			skipOrders,
+			limit,
+		};
+		if (order._id) dispatch(deleteOrderAsyncThunk(body));
+	}, []);
 
 	const handleUpdateQuantity = useCallback((event) => {
 		const body = {
@@ -125,8 +136,7 @@ const OrdersTableComponent = ({
 							</TableRow>
 						</TableHead>
 						<TableBody>
-							{orders &&
-								orders.length > 0 &&
+							{orders && orders.length > 0 ? (
 								orders.map((order) => (
 									<OrderRowComponent
 										key={order._id}
@@ -134,7 +144,12 @@ const OrdersTableComponent = ({
 										skipOrders={skipOrders}
 										limit={limit}
 									/>
-								))}
+								))
+							) : (
+								<TableRow>
+									<TableCell align="left">{UI_STRINGS.YOUR_ORDERS}</TableCell>
+								</TableRow>
+							)}
 						</TableBody>
 					</Table>
 				</TableContainer>

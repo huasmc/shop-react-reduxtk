@@ -2,6 +2,20 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
 
+## Installation
+
+Set the following environment variable in a created `.env` file inside the root folder.
+
+```bash
+JWT_SECRET=secretKey
+```
+
+Install dependencies
+
+```bash
+$ npm install
+```
+
 ## Available Scripts
 
 In the project directory, you can run:

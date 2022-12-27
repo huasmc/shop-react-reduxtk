@@ -37,13 +37,14 @@ const Profile = () => {
 					display: "flex",
 					alignItems: "center",
 					height: "100vh",
+					width: "100vw",
 				}}
 			>
-				<Grid container spacing={2}>
+				<Grid container spacing={1}>
 					<Grid item row={1} xs={12}>
 						<RoleSelector />
 					</Grid>
-					<Grid item row={1} xs={12}>
+					<Grid item row={2} xs={12}>
 						{orders && (
 							<OrdersTableComponent
 								ordersObject={orders}

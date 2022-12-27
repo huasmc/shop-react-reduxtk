@@ -55,6 +55,7 @@ const ProductRowComponent = ({ product }) => {
 					onChange={(event) => setQuantity(event.target.value)}
 					placeholder="Qty"
 					style={{ width: "70px" }}
+					disabled={user.activeRole === ROLES[1]}
 					defaultValue={quantity}
 				/>
 			</TableCell>
@@ -85,7 +86,7 @@ const ProductsTableComponent = ({ products, setSkipProducts }) => {
 	);
 
 	return (
-		<TableContainer component={Paper} style={{ overflow: "auto" }}>
+		<TableContainer component={Paper}>
 			<Table>
 				<TableHead>
 					<TableRow>
@@ -96,6 +97,7 @@ const ProductsTableComponent = ({ products, setSkipProducts }) => {
 				</TableHead>
 				<TableBody>
 					{products &&
+						products.length > 0 &&
 						products.map((product) => (
 							<ProductRowComponent key={product.id} product={product} />
 						))}

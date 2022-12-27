@@ -55,7 +55,7 @@ const ProductRowComponent = ({ product }) => {
 					onChange={(event) => setQuantity(event.target.value)}
 					placeholder="Qty"
 					style={{ width: "70px" }}
-					disabled={user.activeRole === ROLES[1]}
+					disabled={user.activeRole !== ROLES[1]}
 					defaultValue={quantity}
 				/>
 			</TableCell>

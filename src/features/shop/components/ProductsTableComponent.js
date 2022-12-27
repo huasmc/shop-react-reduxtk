@@ -64,8 +64,7 @@ const ProductRowComponent = ({ product }) => {
 	);
 };
 
-const ProductsTableComponent = ({ setSkipProducts }) => {
-	const products = useSelector(selectProducts);
+const ProductsTableComponent = ({ products, setSkipProducts }) => {
 	const [page, setPage] = useState(1);
 
 	const handlePageChange = useCallback(

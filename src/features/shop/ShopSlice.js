@@ -7,10 +7,14 @@ import { UI_STRINGS } from "../assets/UI_STRINGS";
 export const getProductsAsyncThunk = createAsyncThunk(
 	"shop/products",
 	async (queryParams, { dispatch }) => {
-		const response = await get(ENDPOINTS.SHOP_PRODUCTS + "?", queryParams);
-		const data = await response.json();
-		dispatch(setAppLoading(false));
-		return data;
+		try {
+			const response = await get(ENDPOINTS.SHOP_PRODUCTS + "?", queryParams);
+			const data = await response.json();
+			dispatch(setAppLoading(false));
+			return data;
+		} catch (error) {
+			throw new Error();
+		}
 	}
 );
 

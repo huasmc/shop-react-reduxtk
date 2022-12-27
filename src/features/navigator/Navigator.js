@@ -125,7 +125,7 @@ const Navigator = ({ router }) => {
 			position="fixed"
 			style={{ backgroundColor: "#3f648b", zIndex: 20 }}
 		>
-			{width < 486 ? (
+			{486 < width ? (
 				<WideMenu endSession={endSession} />
 			) : (
 				<NarrowMenu endSession={endSession} />

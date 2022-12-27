@@ -1,10 +1,11 @@
 import { memo, useCallback, useEffect, useState } from "react";
 import { selectSignInUser } from "../signIn/SignInSlice";
-import { UI_STRINGS } from "../assets/UI_STRINGS";
-import { Grid, Link } from "@mui/material";
+import { Grid, Tooltip } from "@mui/material";
 import { useSelector } from "react-redux";
 import { decodeToken } from "react-jwt";
-import { paths } from "../router/paths";
+import useWindowDimensions from "../../customHooks/useWindowDimensions";
+import NarrowMenu from "./menu/NarrowMenu";
+import WideMenu from "./menu/WideMenu";
 
 export const SessionTimer = memo(({ router }) => {
 	const user = useSelector(selectSignInUser);
@@ -33,45 +34,28 @@ export const SessionTimer = memo(({ router }) => {
 	}, [user, router]);
 
 	return (
-		<Grid item xs={2}>
-			<span style={{ color: "lightgreen", fontWeight: "bold" }}>
-				{UI_STRINGS.TIME_LEFT}: {timeLeft}
-			</span>
-		</Grid>
+		<Tooltip title="Time left in session">
+			<span className="session-timer">{timeLeft}</span>
+		</Tooltip>
 	);
 });
 
 const Navigator = ({ router }) => {
 	const endSession = useCallback(() => localStorage.clear(), []);
+	const { width } = useWindowDimensions();
 
 	return (
 		<Grid
 			container
 			spacing={2}
 			position="fixed"
-			style={{ backgroundColor: "#3f648b", zIndex: 20 }}
+			style={{ backgroundColor: "#004A7C", zIndex: 20 }}
 		>
-			<Grid item xs={10}>
-				{paths.map((path, key) => (
-					<Link key={key} href={path.path} style={{ color: "white" }}>
-						<span style={{ margin: "10px", fontSize: "27px" }}>
-							{path.title}
-						</span>
-					</Link>
-				))}
-				<Link
-					href="/"
-					style={{
-						color: "darkred",
-					}}
-					onClick={endSession}
-				>
-					<span style={{ margin: "10px", fontSize: "27px" }}>
-						{UI_STRINGS.LOG_OUT}
-					</span>
-				</Link>
-			</Grid>
-			<SessionTimer />
+			{762 < width ? (
+				<WideMenu router={router} endSession={endSession} />
+			) : (
+				<NarrowMenu router={router} endSession={endSession} />
+			)}
 		</Grid>
 	);
 };

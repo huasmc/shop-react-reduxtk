@@ -10,7 +10,6 @@ import {
 	TableBody,
 	Pagination,
 	TextField,
-	Grid,
 	Tooltip,
 } from "@mui/material";
 import { UI_STRINGS } from "../../assets/UI_STRINGS";
@@ -25,10 +24,12 @@ import {
 	updateOrderAsyncThunk,
 } from "../thunks/ProfileAsyncThunks";
 import { setAppLoading, setSnackbarMessage } from "../../../AppSlice";
+import useIsMobile from "../../../customHooks/useIsMobile";
 
 const OrderRowComponent = ({ order, skipOrders, limit }) => {
 	const { user } = useSelector(selectSignInUser);
 	const [product, setProduct] = useState();
+	const isMobile = useIsMobile();
 	const dispatch = useDispatch();
 
 	const handleDeleteOrder = useCallback(() => {
@@ -41,20 +42,23 @@ const OrderRowComponent = ({ order, skipOrders, limit }) => {
 		if (order._id) dispatch(deleteOrderAsyncThunk(body));
 	}, [order, user, skipOrders, limit, dispatch]);
 
-	const handleUpdateQuantity = useCallback((event) => {
-		const body = {
-			_id: order._id,
-			quantity: event.target.value,
-			user,
-			skipOrders,
-			limit,
-		};
-		try {
-			dispatch(updateOrderAsyncThunk(body, dispatch));
-		} catch (error) {
-			dispatch(setSnackbarMessage(UI_STRINGS.REQUEST_STATUS.REJECTED));
-		}
-	}, []);
+	const handleUpdateQuantity = useCallback(
+		(event) => {
+			const body = {
+				_id: order._id,
+				quantity: event.target.value,
+				user,
+				skipOrders,
+				limit,
+			};
+			try {
+				dispatch(updateOrderAsyncThunk(body, dispatch));
+			} catch (error) {
+				dispatch(setSnackbarMessage(UI_STRINGS.REQUEST_STATUS.REJECTED));
+			}
+		},
+		[order, limit, skipOrders, user, dispatch]
+	);
 
 	const getProduct = useCallback(async () => {
 		try {
@@ -82,10 +86,18 @@ const OrderRowComponent = ({ order, skipOrders, limit }) => {
 			{product && order && (
 				<TableRow>
 					<TableCell align="left">
-						<img src={product.thumbnail} alt="" style={{ width: "140px" }} />
+						<div style={{ height: "75px", width: "75px" }}>
+							<img
+								src={product.thumbnail}
+								alt=""
+								style={{ maxWidth: "100%", maxHeight: "100%" }}
+							/>
+						</div>
 					</TableCell>
 
-					<TableCell align="left">{<h3>{product.title}</h3>}</TableCell>
+					{!isMobile && (
+						<TableCell align="left">{<h3>{product.title}</h3>}</TableCell>
+					)}
 					<TableCell align="left">
 						<Tooltip
 							title={
@@ -100,11 +112,17 @@ const OrderRowComponent = ({ order, skipOrders, limit }) => {
 								placeholder="Qty"
 								style={{ width: "70px" }}
 								disabled={user.activeRole === ROLES[1]}
-								defaultValue={order.quantity}
+								value={order.quantity}
 							/>
 						</Tooltip>
 					</TableCell>
-					<TableCell align="left">{<h3>${product.price}</h3>}</TableCell>
+					<TableCell align="left">
+						{
+							<p style={{ fontWeight: "bold" }}>
+								${product.price.toLocaleString()}
+							</p>
+						}
+					</TableCell>
 					<TableCell>
 						<AppButton
 							text={UI_STRINGS.DELETE}
@@ -145,40 +163,38 @@ const OrdersTableComponent = ({
 	};
 	return (
 		<>
-			<Grid>
-				<TableContainer component={Paper}>
-					<Table>
-						<TableHead>
+			<TableContainer component={Paper}>
+				<Table>
+					<TableHead>
+						<TableRow>
+							{TableHeaders.map((header) => (
+								<TableCell key={header}>{header}</TableCell>
+							))}
+						</TableRow>
+					</TableHead>
+					<TableBody>
+						{orders && orders.length > 0 ? (
+							orders.map((order) => (
+								<OrderRowComponent
+									key={order._id}
+									order={order}
+									skipOrders={skipOrders}
+									limit={limit}
+								/>
+							))
+						) : (
 							<TableRow>
-								{TableHeaders.map((header) => (
-									<TableCell key={header}>{header}</TableCell>
-								))}
+								<TableCell align="left">{UI_STRINGS.YOUR_ORDERS}</TableCell>
 							</TableRow>
-						</TableHead>
-						<TableBody>
-							{orders && orders.length > 0 ? (
-								orders.map((order) => (
-									<OrderRowComponent
-										key={order._id}
-										order={order}
-										skipOrders={skipOrders}
-										limit={limit}
-									/>
-								))
-							) : (
-								<TableRow>
-									<TableCell align="left">{UI_STRINGS.YOUR_ORDERS}</TableCell>
-								</TableRow>
-							)}
-						</TableBody>
-					</Table>
-				</TableContainer>
+						)}
+					</TableBody>
+				</Table>
 				<Pagination
 					count={getPageCount()}
 					onChange={handlePageChange}
 					page={page}
 				/>
-			</Grid>
+			</TableContainer>
 		</>
 	);
 };

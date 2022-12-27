@@ -52,6 +52,7 @@ const SignInContainer = () => {
 				display: "flex",
 				alignItems: "center",
 				height: "100vh",
+				justifyContent: "center",
 			}}
 		>
 			<SignInComponent

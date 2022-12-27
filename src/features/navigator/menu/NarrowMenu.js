@@ -4,7 +4,7 @@ import { UI_STRINGS } from "../../assets/UI_STRINGS";
 import { paths } from "../../router/paths";
 import { SessionTimer } from "../Navigator";
 
-const NarrowMenu = ({ router }) => {
+const NarrowMenu = ({ router, endSession }) => {
 	const [anchorEl, setAnchorEl] = useState(null);
 	const open = Boolean(anchorEl);
 
@@ -22,6 +22,7 @@ const NarrowMenu = ({ router }) => {
 				aria-controls={open ? "basic-menu" : undefined}
 				aria-haspopup="true"
 				aria-expanded={open ? "true" : undefined}
+				style={{ backgroundColor: "#ffffff00" }}
 				onClick={handleClick}
 			>
 				<span style={{ color: "white" }}>{UI_STRINGS.MENU}</span>
@@ -42,6 +43,16 @@ const NarrowMenu = ({ router }) => {
 						</Link>
 					</MenuItem>
 				))}
+				<MenuItem onClick={endSession}>
+					<Link
+						href="/"
+						style={{
+							color: "darkred",
+						}}
+					>
+						<span>{UI_STRINGS.LOG_OUT}</span>
+					</Link>
+				</MenuItem>
 			</Menu>
 			<SessionTimer router={router} />
 		</div>

@@ -8,7 +8,6 @@ import {
 	TableBody,
 	Pagination,
 	TextField,
-	Grid,
 } from "@mui/material";
 import { memo, useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,12 +16,14 @@ import { createOrderAsyncThunk } from "../ShopSlice";
 import { selectSignInUser } from "../../signIn/SignInSlice";
 import AppButton from "../../common/AppButton";
 import { ROLES } from "../../assets/roles";
+import useIsMobile from "../../../customHooks/useIsMobile";
 
 const TableHeaders = ["", "Title", "Quantity", "Price"];
 
 const ProductRowComponent = ({ product }) => {
 	const { user } = useSelector(selectSignInUser);
 	const [quantity, setQuantity] = useState(1);
+	const isMobile = useIsMobile();
 	const dispatch = useDispatch();
 
 	const handleCreateOrder = useCallback(() => {
@@ -43,9 +44,11 @@ const ProductRowComponent = ({ product }) => {
 				</div>
 			</TableCell>
 
-			<TableCell align="left">
-				<p style={{ fontWeight: "bold" }}>{product.title}</p>
-			</TableCell>
+			{!isMobile && (
+				<TableCell align="left">
+					<p style={{ fontWeight: "bold" }}>{product.title}</p>
+				</TableCell>
+			)}
 			<TableCell align="left">
 				<TextField
 					type="number"

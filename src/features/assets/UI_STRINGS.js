@@ -4,7 +4,7 @@ export const UI_STRINGS = {
 	BUY: "Buy",
 	SIGN_UP: "Sign up",
 	SHOP: "Shop",
-	NOT_AUTHORIZED: "Not authroized",
+	NOT_AUTHORIZED: "Not authorized",
 	DELETE: "Delete",
 	USER_ROLE: "User Role",
 	REQUEST_STATUS: {

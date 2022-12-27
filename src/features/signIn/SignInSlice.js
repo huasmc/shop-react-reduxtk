@@ -5,10 +5,18 @@ import { get, post } from "../../service/rest";
 import { ROLES } from "../assets/roles";
 import { UI_STRINGS } from "../assets/UI_STRINGS";
 
-export const signInAsyncThunk = createAsyncThunk("sign-in", async (body) => {
-	const response = await post(ENDPOINTS.SIGN_IN, body);
-	return await response.json();
-});
+export const signInAsyncThunk = createAsyncThunk(
+	"sign-in",
+	async (body, { dispatch }) => {
+		try {
+			const response = await post(ENDPOINTS.SIGN_IN, body);
+			dispatch(setAppLoading(false));
+			return await response.json();
+		} catch (error) {
+			throw new Error(error);
+		}
+	}
+);
 
 export const signUpAsyncThunk = createAsyncThunk("sign-up", async (body) => {
 	const response = await post(ENDPOINTS.SIGN_UP, body);
@@ -83,7 +91,6 @@ const signInSlice = createSlice({
 	},
 });
 
-export const selectSignInLoading = (state) => state.signInReducer.loading;
 export const selectSignInUser = (state) => state.signInReducer;
 export const selectSignInMessage = (state) => state.signInReducer.message;
 export const selectUserOrders = (state) => state.signInReducer.orders;

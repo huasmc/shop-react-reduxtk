@@ -3,7 +3,6 @@ import { memo, useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
-	selectSignInLoading,
 	selectSignInMessage,
 	selectSignInUser,
 	signInAsyncThunk,
@@ -11,7 +10,7 @@ import {
 } from "./SignInSlice";
 import { isAuthenticated } from "../../service/isAuthenticated";
 import SignInComponent from "./components/SignInComponent";
-import { setSnackbarMessage } from "../../AppSlice";
+import { setAppLoading, setSnackbarMessage } from "../../AppSlice";
 
 const SignInContainer = () => {
 	const message = useSelector(selectSignInMessage);
@@ -21,9 +20,13 @@ const SignInContainer = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
-	const onSignInClick = useCallback(() => {
-		if (username && password) {
-			dispatch(signInAsyncThunk({ username, password }));
+	const onSignInClick = useCallback(async () => {
+		try {
+			dispatch(setAppLoading(true));
+			if (username && password)
+				await dispatch(signInAsyncThunk({ username, password }, dispatch));
+		} catch (error) {
+			dispatch(setAppLoading(false));
 		}
 	}, [username, password, dispatch]);
 

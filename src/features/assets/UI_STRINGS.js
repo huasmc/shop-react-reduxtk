@@ -16,4 +16,5 @@ export const UI_STRINGS = {
 	USER_ROLE_REQUIRED: "User role required",
 	ADMIN_ROLE_REQUIRED: "Admin role required",
 	LOG_OUT: "Log-out",
+	TIME_LEFT: "TIME LEFT IN SESSION",
 };

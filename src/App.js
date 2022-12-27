@@ -40,11 +40,11 @@ function App() {
 	};
 
 	return (
-		<>
+		<div style={{ background: "#bdb9b9" }}>
 			<Box sx={{ flexGrow: 1 }}>
 				<Grid container spacing={2} justifyContent="center">
 					<Grid item row={1} xs={12}>
-						<Navigator />
+						<Navigator router={router} />
 					</Grid>
 					<Grid item row={2}>
 						<RouterProvider router={router} />
@@ -64,7 +64,7 @@ function App() {
 			>
 				<CircularProgress color="inherit" />
 			</Backdrop>
-		</>
+		</div>
 	);
 }
 

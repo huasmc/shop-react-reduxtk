@@ -112,7 +112,7 @@ const OrderRowComponent = ({ order, skipOrders, limit }) => {
 								placeholder="Qty"
 								style={{ width: "70px" }}
 								disabled={user.activeRole === ROLES[1]}
-								defaultValue={order.quantity}
+								value={order.quantity}
 							/>
 						</Tooltip>
 					</TableCell>

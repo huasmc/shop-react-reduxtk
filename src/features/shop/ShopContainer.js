@@ -30,11 +30,11 @@ const ShopContainer = () => {
 				display: "flex",
 				alignItems: "center",
 				height: "100vh",
-				marginLeft: "160px",
+				width: "100vw",
 			}}
 		>
 			<Grid container>
-				<Grid item column="true" xs={10}>
+				<Grid item column="true" xs={12}>
 					<ProductsTableComponent
 						products={products}
 						setSkipProducts={setSkipProducts}

@@ -13,7 +13,7 @@ import {
 import { memo, useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { UI_STRINGS } from "../../assets/UI_STRINGS";
-import { createOrderAsyncThunk, selectProducts } from "../ShopSlice";
+import { createOrderAsyncThunk } from "../ShopSlice";
 import { selectSignInUser } from "../../signIn/SignInSlice";
 import AppButton from "../../common/AppButton";
 import { ROLES } from "../../assets/roles";
@@ -44,7 +44,7 @@ const ProductRowComponent = ({ product }) => {
 			</TableCell>
 
 			<TableCell align="left">
-				<h3>{product.title}</h3>
+				<p style={{ fontWeight: "bold" }}>{product.title}</p>
 			</TableCell>
 			<TableCell align="left">
 				<TextField
@@ -56,7 +56,7 @@ const ProductRowComponent = ({ product }) => {
 				/>
 			</TableCell>
 			<TableCell align="left">
-				<h3>${product.price.toLocaleString()}</h3>
+				<p style={{ fontWeight: "bold" }}>${product.price.toLocaleString()}</p>
 			</TableCell>
 			<TableCell>
 				<AppButton
@@ -82,30 +82,28 @@ const ProductsTableComponent = ({ products, setSkipProducts }) => {
 	);
 
 	return (
-		<Grid>
-			<TableContainer component={Paper} style={{ overflow: "hidden" }}>
-				<Table>
-					<TableHead>
-						<TableRow>
-							{TableHeaders.map((header) => (
-								<TableCell key={header}>{header}</TableCell>
-							))}
-						</TableRow>
-					</TableHead>
-					<TableBody>
-						{products &&
-							products.map((product) => (
-								<ProductRowComponent key={product.id} product={product} />
-							))}
-					</TableBody>
-				</Table>
-				<Pagination
-					count={products.length}
-					onChange={handlePageChange}
-					page={page}
-				/>
-			</TableContainer>
-		</Grid>
+		<TableContainer component={Paper} style={{ overflow: "auto" }}>
+			<Table>
+				<TableHead>
+					<TableRow>
+						{TableHeaders.map((header) => (
+							<TableCell key={header}>{header}</TableCell>
+						))}
+					</TableRow>
+				</TableHead>
+				<TableBody>
+					{products &&
+						products.map((product) => (
+							<ProductRowComponent key={product.id} product={product} />
+						))}
+				</TableBody>
+			</Table>
+			<Pagination
+				count={products.length}
+				onChange={handlePageChange}
+				page={page}
+			/>
+		</TableContainer>
 	);
 };
 

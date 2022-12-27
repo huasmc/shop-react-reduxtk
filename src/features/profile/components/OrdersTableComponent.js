@@ -41,20 +41,23 @@ const OrderRowComponent = ({ order, skipOrders, limit }) => {
 		if (order._id) dispatch(deleteOrderAsyncThunk(body));
 	}, [order, user, skipOrders, limit, dispatch]);
 
-	const handleUpdateQuantity = useCallback((event) => {
-		const body = {
-			_id: order._id,
-			quantity: event.target.value,
-			user,
-			skipOrders,
-			limit,
-		};
-		try {
-			dispatch(updateOrderAsyncThunk(body, dispatch));
-		} catch (error) {
-			dispatch(setSnackbarMessage(UI_STRINGS.REQUEST_STATUS.REJECTED));
-		}
-	}, []);
+	const handleUpdateQuantity = useCallback(
+		(event) => {
+			const body = {
+				_id: order._id,
+				quantity: event.target.value,
+				user,
+				skipOrders,
+				limit,
+			};
+			try {
+				dispatch(updateOrderAsyncThunk(body, dispatch));
+			} catch (error) {
+				dispatch(setSnackbarMessage(UI_STRINGS.REQUEST_STATUS.REJECTED));
+			}
+		},
+		[order, limit, skipOrders, user, dispatch]
+	);
 
 	const getProduct = useCallback(async () => {
 		try {

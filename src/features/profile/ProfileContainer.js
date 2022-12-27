@@ -14,7 +14,7 @@ import { setAppLoading } from "../../AppSlice";
 const Profile = () => {
 	const { user } = useSelector(selectSignInUser);
 	const [skipOrders, setSkipOrders] = useState(0);
-	const [limit, setLimit] = useState(5);
+	const limit = 5;
 	const orders = useSelector(selectUserOrders);
 	const dispatch = useDispatch();
 

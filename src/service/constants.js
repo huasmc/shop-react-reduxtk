@@ -1,4 +1,4 @@
-export const NEST_BASE_URL = "http://localhost:3000";
+export const NEST_BASE_URL = "http://10.0.0.235:3000";
 export const SHOP_BASE_URL = "https://dummyjson.com";
 
 export const ENDPOINTS = {

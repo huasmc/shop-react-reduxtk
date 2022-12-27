@@ -41,16 +41,14 @@ function App() {
 
 	return (
 		<div style={{ background: "#bdb9b9" }}>
-			<Box sx={{ flexGrow: 1 }}>
-				<Grid container spacing={2} justifyContent="center">
-					<Grid item row={1} xs={12}>
-						<Navigator router={router} />
-					</Grid>
-					<Grid item row={2}>
-						<RouterProvider router={router} />
-					</Grid>
+			<Grid container spacing={2} justifyContent="center">
+				<Grid item row={1} xs={12}>
+					<Navigator router={router} />
 				</Grid>
-			</Box>
+				<Grid item row={2} xs={12}>
+					<RouterProvider router={router} />
+				</Grid>
+			</Grid>
 
 			<Snackbar
 				open={snackbarOpen}

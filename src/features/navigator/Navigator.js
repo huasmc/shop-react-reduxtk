@@ -1,10 +1,11 @@
 import { memo, useCallback, useEffect, useState } from "react";
 import { selectSignInUser } from "../signIn/SignInSlice";
 import { UI_STRINGS } from "../assets/UI_STRINGS";
-import { Grid, Link } from "@mui/material";
+import { Button, Grid, Link, Menu, MenuItem } from "@mui/material";
 import { useSelector } from "react-redux";
 import { decodeToken } from "react-jwt";
 import { paths } from "../router/paths";
+import useWindowDimensions from "../../customHooks/useWindowDimensions";
 
 export const SessionTimer = memo(({ router }) => {
 	const user = useSelector(selectSignInUser);
@@ -41,16 +42,9 @@ export const SessionTimer = memo(({ router }) => {
 	);
 });
 
-const Navigator = ({ router }) => {
-	const endSession = useCallback(() => localStorage.clear(), []);
-
+const WideMenu = ({ endSession }) => {
 	return (
-		<Grid
-			container
-			spacing={2}
-			position="fixed"
-			style={{ backgroundColor: "#3f648b", zIndex: 20 }}
-		>
+		<>
 			<Grid item xs={10}>
 				{paths.map((path, key) => (
 					<Link key={key} href={path.path} style={{ color: "white" }}>
@@ -72,6 +66,70 @@ const Navigator = ({ router }) => {
 				</Link>
 			</Grid>
 			<SessionTimer />
+		</>
+	);
+};
+
+const NarrowMenu = ({ endSession }) => {
+	const [anchorEl, setAnchorEl] = useState(null);
+	const open = Boolean(anchorEl);
+
+	const handleClick = useCallback((event) => {
+		setAnchorEl(event.currentTarget);
+	}, []);
+
+	const handleClose = useCallback(() => {
+		setAnchorEl(null);
+	}, []);
+
+	return (
+		<div style={{ margin: "10px 0 0 10px" }}>
+			<Button
+				id="basic-button"
+				aria-controls={open ? "basic-menu" : undefined}
+				aria-haspopup="true"
+				aria-expanded={open ? "true" : undefined}
+				onClick={handleClick}
+			>
+				<span style={{ color: "white" }}>{UI_STRINGS.MENU}</span>
+			</Button>
+			<Menu
+				id="basic-menu"
+				anchorEl={anchorEl}
+				open={open}
+				onClose={handleClose}
+				MenuListProps={{
+					"aria-labelledby": "basic-button",
+				}}
+			>
+				{paths.map((path) => (
+					<MenuItem key={path.title} onClick={handleClose}>
+						<Link href={path.path}>
+							<span>{path.title}</span>
+						</Link>
+					</MenuItem>
+				))}
+			</Menu>
+		</div>
+	);
+};
+
+const Navigator = ({ router }) => {
+	const endSession = useCallback(() => localStorage.clear(), []);
+	const { width } = useWindowDimensions();
+
+	return (
+		<Grid
+			container
+			spacing={2}
+			position="fixed"
+			style={{ backgroundColor: "#3f648b", zIndex: 20 }}
+		>
+			{width < 486 ? (
+				<WideMenu endSession={endSession} />
+			) : (
+				<NarrowMenu endSession={endSession} />
+			)}
 		</Grid>
 	);
 };

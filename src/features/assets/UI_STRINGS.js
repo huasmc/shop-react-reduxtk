@@ -18,4 +18,5 @@ export const UI_STRINGS = {
 	LOG_OUT: "Log-out",
 	TIME_LEFT: "TIME LEFT IN SESSION",
 	EXTERNAL_MOCK_FAILED: "Mock data API failed",
+	MENU: "Menu",
 };

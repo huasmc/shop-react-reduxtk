@@ -49,7 +49,7 @@ const Navigator = ({ router }) => {
 			container
 			spacing={2}
 			position="fixed"
-			style={{ backgroundColor: "#3f648b", zIndex: 20 }}
+			style={{ backgroundColor: "#004A7C", zIndex: 20 }}
 		>
 			{762 < width ? (
 				<WideMenu router={router} endSession={endSession} />

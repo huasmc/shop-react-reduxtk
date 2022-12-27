@@ -24,6 +24,7 @@ const RoleSelector = () => {
 				value={user && user.activeRole}
 				label="Role"
 				onChange={onChange}
+				style={{ background: "#FAFAFA" }}
 			>
 				{ROLES.map((userRole) => (
 					<MenuItem key={userRole} value={userRole}>

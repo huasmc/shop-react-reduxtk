@@ -20,7 +20,7 @@ const SignInComponent = ({
 			{
 				<Grid container spacing={2}>
 					<Grid container spacing={4} justifyContent="center">
-						<h1>{UI_STRINGS.SIGN_IN}</h1>
+						<h1 style={{ color: "white" }}>{UI_STRINGS.SIGN_IN}</h1>
 					</Grid>
 					<Grid item xs={12}>
 						<TextField

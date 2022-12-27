@@ -39,7 +39,11 @@ const ProductRowComponent = ({ product }) => {
 					<img
 						src={product.thumbnail}
 						alt=""
-						style={{ maxWidth: "100%", maxHeight: "100%" }}
+						style={{
+							maxWidth: "100%",
+							maxHeight: "100%",
+							borderRadius: "100px",
+						}}
 					/>
 				</div>
 			</TableCell>

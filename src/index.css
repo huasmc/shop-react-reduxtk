@@ -1,6 +1,6 @@
 html {
-	background-color: #bdb9b9;
 	overflow-x: hidden;
+	color: "black";
 }
 
 body {
@@ -10,7 +10,6 @@ body {
 		sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-	background-color: #bdb9b9;
 	padding-right: 0 !important;
 	overflow: hidden;
 	width: 100%;
@@ -20,4 +19,8 @@ body {
 code {
 	font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
 		monospace;
+}
+
+tr {
+	border-color: white !important;
 }

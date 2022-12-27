@@ -2,8 +2,9 @@ import { Button, Link, Menu, MenuItem } from "@mui/material";
 import { memo, useCallback, useState } from "react";
 import { UI_STRINGS } from "../../assets/UI_STRINGS";
 import { paths } from "../../router/paths";
+import { SessionTimer } from "../Navigator";
 
-const NarrowMenu = () => {
+const NarrowMenu = ({ router }) => {
 	const [anchorEl, setAnchorEl] = useState(null);
 	const open = Boolean(anchorEl);
 
@@ -42,6 +43,7 @@ const NarrowMenu = () => {
 					</MenuItem>
 				))}
 			</Menu>
+			<SessionTimer router={router} />
 		</div>
 	);
 };

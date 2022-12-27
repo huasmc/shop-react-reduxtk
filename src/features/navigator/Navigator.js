@@ -1,7 +1,7 @@
 import { memo, useCallback, useEffect, useState } from "react";
 import { selectSignInUser } from "../signIn/SignInSlice";
 import { UI_STRINGS } from "../assets/UI_STRINGS";
-import { Grid } from "@mui/material";
+import { Grid, Tooltip } from "@mui/material";
 import { useSelector } from "react-redux";
 import { decodeToken } from "react-jwt";
 import useWindowDimensions from "../../customHooks/useWindowDimensions";
@@ -35,11 +35,9 @@ export const SessionTimer = memo(({ router }) => {
 	}, [user, router]);
 
 	return (
-		<Grid item xs={2}>
-			<span style={{ color: "lightgreen", fontWeight: "bold" }}>
-				{UI_STRINGS.TIME_LEFT}: {timeLeft}
-			</span>
-		</Grid>
+		<Tooltip title="Time left in session">
+			<span className="session-timer">{timeLeft}</span>
+		</Tooltip>
 	);
 });
 
@@ -57,7 +55,7 @@ const Navigator = ({ router }) => {
 			{762 < width ? (
 				<WideMenu router={router} endSession={endSession} />
 			) : (
-				<NarrowMenu endSession={endSession} />
+				<NarrowMenu router={router} endSession={endSession} />
 			)}
 		</Grid>
 	);

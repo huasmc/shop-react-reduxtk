@@ -34,7 +34,13 @@ const ProductRowComponent = ({ product }) => {
 	return (
 		<TableRow>
 			<TableCell align="left">
-				<img src={product.thumbnail} alt="" style={{ width: "140px" }} />
+				<div style={{ height: "75px", width: "75px" }}>
+					<img
+						src={product.thumbnail}
+						alt=""
+						style={{ maxWidth: "100%", maxHeight: "100%" }}
+					/>
+				</div>
 			</TableCell>
 
 			<TableCell align="left">
@@ -77,7 +83,7 @@ const ProductsTableComponent = ({ products, setSkipProducts }) => {
 
 	return (
 		<Grid>
-			<TableContainer component={Paper}>
+			<TableContainer component={Paper} style={{ overflow: "hidden" }}>
 				<Table>
 					<TableHead>
 						<TableRow>
@@ -93,12 +99,12 @@ const ProductsTableComponent = ({ products, setSkipProducts }) => {
 							))}
 					</TableBody>
 				</Table>
+				<Pagination
+					count={products.length}
+					onChange={handlePageChange}
+					page={page}
+				/>
 			</TableContainer>
-			<Pagination
-				count={products.length}
-				onChange={handlePageChange}
-				page={page}
-			/>
 		</Grid>
 	);
 };

@@ -2,7 +2,7 @@ import { memo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ProductsTableComponent from "./components/ProductsTableComponent";
 import { getProductsAsyncThunk, selectProducts } from "./ShopSlice";
-import { Box } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import withAuth from "../auth/WithAuth";
 import { setAppLoading } from "../../AppSlice";
 import { selectSignInUser } from "../signIn/SignInSlice";
@@ -30,12 +30,17 @@ const ShopContainer = () => {
 				display: "flex",
 				alignItems: "center",
 				height: "100vh",
+				marginLeft: "160px",
 			}}
 		>
-			<ProductsTableComponent
-				products={products}
-				setSkipProducts={setSkipProducts}
-			/>
+			<Grid container>
+				<Grid item column="true" xs={10}>
+					<ProductsTableComponent
+						products={products}
+						setSkipProducts={setSkipProducts}
+					/>
+				</Grid>
+			</Grid>
 		</Box>
 	);
 };

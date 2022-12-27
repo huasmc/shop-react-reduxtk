@@ -7,11 +7,13 @@ import withAuth from "../auth/WithAuth";
 import { setAppLoading } from "../../AppSlice";
 import { selectSignInUser } from "../signIn/SignInSlice";
 import { UI_STRINGS } from "../assets/UI_STRINGS";
+import useIsMobile from "../../customHooks/useIsMobile";
 
 const ShopContainer = () => {
 	const [skipProducts, setSkipProducts] = useState(0);
 	const { user } = useSelector(selectSignInUser);
 	const products = useSelector(selectProducts);
+	const isMobile = useIsMobile();
 	const dispatch = useDispatch();
 
 	useEffect(() => {
@@ -31,6 +33,7 @@ const ShopContainer = () => {
 				alignItems: "center",
 				height: "100vh",
 				width: "100vw",
+				padding: isMobile ? "" : "20%",
 			}}
 		>
 			<Grid container>

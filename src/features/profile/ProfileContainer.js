@@ -10,13 +10,16 @@ import OrdersTableComponent from "./components/OrdersTableComponent";
 import { Box, Grid } from "@mui/material";
 import RoleSelector from "../roleSelector/RoleSelector";
 import { setAppLoading } from "../../AppSlice";
+import useIsMobile from "../../customHooks/useIsMobile";
 
 const Profile = () => {
 	const { user } = useSelector(selectSignInUser);
 	const [skipOrders, setSkipOrders] = useState(0);
-	const limit = 5;
 	const orders = useSelector(selectUserOrders);
+	const isMobile = useIsMobile();
 	const dispatch = useDispatch();
+
+	const limit = 5;
 
 	useEffect(() => {
 		dispatch(setAppLoading(true));
@@ -38,6 +41,7 @@ const Profile = () => {
 					alignItems: "center",
 					height: "100vh",
 					width: "100vw",
+					padding: isMobile ? "" : "20%",
 				}}
 			>
 				<Grid container spacing={1}>

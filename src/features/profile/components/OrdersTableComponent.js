@@ -57,12 +57,20 @@ const OrderRowComponent = ({ order, skipOrders, limit }) => {
 	}, []);
 
 	const getProduct = useCallback(async () => {
-		const request = await get(ENDPOINTS.SHOP_PRODUCTS + `/${order.product_id}`);
-		const requestedProduct = request.json();
-		requestedProduct.then((item) => {
-			setProduct(item);
+		try {
+			dispatch(setAppLoading(true));
+			const request = await get(
+				ENDPOINTS.SHOP_PRODUCTS + `/${order.product_id}`
+			);
+			const requestedProduct = request.json();
+			requestedProduct.then((item) => {
+				setProduct(item);
+				dispatch(setAppLoading(false));
+			});
+		} catch (error) {
 			dispatch(setAppLoading(false));
-		});
+			dispatch(setSnackbarMessage(UI_STRINGS.EXTERNAL_MOCK_FAILED));
+		}
 	}, [order, dispatch]);
 
 	useEffect(() => {

@@ -1,6 +1,5 @@
 import { memo, useCallback, useEffect, useState } from "react";
 import { selectSignInUser } from "../signIn/SignInSlice";
-import { UI_STRINGS } from "../assets/UI_STRINGS";
 import { Grid, Tooltip } from "@mui/material";
 import { useSelector } from "react-redux";
 import { decodeToken } from "react-jwt";

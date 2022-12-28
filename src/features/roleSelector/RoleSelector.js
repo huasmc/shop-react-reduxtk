@@ -1,5 +1,5 @@
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
-import { memo } from "react";
+import { memo, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { UI_STRINGS } from "../assets/UI_STRINGS";
 import { selectSignInUser } from "../signIn/SignInSlice";
@@ -8,20 +8,20 @@ import withAuth from "../auth/WithAuth";
 import { ROLES } from "../assets/roles";
 
 const RoleSelector = () => {
-	const { user } = useSelector(selectSignInUser);
+	const { user, activeRole } = useSelector(selectSignInUser);
 	const dispatch = useDispatch();
 
-	const onChange = (event) => {
+	const onChange = useCallback((event) => {
 		const activeRole = event.target.value;
 		dispatch(addRoleAsyncThunk({ user_id: user._id, activeRole }, dispatch));
-	};
+	}, []);
 
 	return (
 		<FormControl fullWidth>
 			<InputLabel id="role-selector">{UI_STRINGS.USER_ROLE}</InputLabel>
 			<Select
 				labelId="role-selector"
-				value={user && user.activeRole}
+				value={activeRole}
 				label="Role"
 				onChange={onChange}
 				style={{ background: "#FAFAFA" }}

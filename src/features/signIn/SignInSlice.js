@@ -58,7 +58,7 @@ const signInSlice = createSlice({
 				state.message = UI_STRINGS.SUCCESS;
 				localStorage.setItem("access_token", payload.access_token);
 				const { user } = payload;
-				state.user = user;
+				state.user = { user };
 				if (user && user.roles.includes(ROLES[0]))
 					state.user.activeRole = ROLES[0];
 				else state.user.activeRole = ROLES[1];
@@ -91,7 +91,7 @@ const signInSlice = createSlice({
 	},
 });
 
-export const selectSignInUser = (state) => state.signInReducer;
+export const selectSignInUser = (state) => state.signInReducer.user;
 export const selectSignInMessage = (state) => state.signInReducer.message;
 export const selectUserOrders = (state) => state.signInReducer.orders;
 

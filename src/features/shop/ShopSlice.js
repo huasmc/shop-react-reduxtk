@@ -21,28 +21,31 @@ export const getProductsAsyncThunk = createAsyncThunk(
 export const createOrderAsyncThunk = createAsyncThunk(
 	"shop/buy",
 	async (body, { dispatch }) => {
-		const response = await post(ENDPOINTS.ADD_ORDER, body);
-		const data = await response.json();
-		dispatch(setSnackbarMessage(UI_STRINGS.SUCCESS));
-		return data;
+		try {
+			const response = await post(ENDPOINTS.ADD_ORDER, body);
+			dispatch(setAppLoading(false));
+			const data = await response.json();
+			if (data.quantity) {
+				dispatch(setSnackbarMessage(UI_STRINGS.SUCCESS));
+			}
+			return data;
+		} catch (error) {
+			dispatch(setSnackbarMessage(UI_STRINGS.SERVER_RUNNING));
+			dispatch(setAppLoading(false));
+			throw new Error(error);
+		}
 	}
 );
 
 const shopSlice = createSlice({
 	name: "shop",
-	initialState: { loading: false, total: 0, products: [] },
+	initialState: { total: 0, products: [] },
 	reducers: {},
 	extraReducers: (builder) => {
-		builder.addCase(getProductsAsyncThunk.pending, (state, action) => {
-			state.loading = true;
-		});
 		builder.addCase(getProductsAsyncThunk.fulfilled, (state, action) => {
 			state.loading = false;
 			state.total = action.payload.total;
 			state.products = action.payload.products;
-		});
-		builder.addCase(getProductsAsyncThunk.rejected, (state, action) => {
-			state.loading = false;
 		});
 	},
 });

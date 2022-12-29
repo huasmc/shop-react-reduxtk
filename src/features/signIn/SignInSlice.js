@@ -109,6 +109,8 @@ const signInSlice = createSlice({
 export const selectSignInUser = (state) => state.signInReducer.user;
 export const selectSignInMessage = (state) => state.signInReducer.message;
 export const selectUserOrders = (state) => state.signInReducer.orders;
+export const selectSignInActiveRole = (state) =>
+	state.signInReducer.user.activeRole;
 
 export const { setSignInActiveRole } = signInSlice.actions;
 export default signInSlice.reducer;

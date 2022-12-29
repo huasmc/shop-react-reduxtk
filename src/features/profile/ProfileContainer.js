@@ -12,7 +12,7 @@ import RoleSelector from "../roleSelector/RoleSelector";
 import { setAppLoading } from "../../AppSlice";
 import useIsMobile from "../../customHooks/useIsMobile";
 
-const Profile = () => {
+const ProfileContainer = () => {
 	const { user } = useSelector(selectSignInUser);
 	const [skipOrders, setSkipOrders] = useState(0);
 	const orders = useSelector(selectUserOrders);
@@ -64,4 +64,4 @@ const Profile = () => {
 	);
 };
 
-export default memo(withAuth(Profile));
+export default memo(withAuth(ProfileContainer));

@@ -2,38 +2,25 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
 
-- change profile => profileContainer
-- fix selectSignInUser navigation auth undefined, activeRole set
+## How to run
 
-- React Native use IP instead of localhost
-- nestjs user orders count when deleted
-- Create orderAsyncThunk is always success
-- Check user object
-- AddRole request body no need for activeRole
-- Extract table row components
-- Check offline backend requests
-- Snackbar press and position
-- ReactJS thunk middleware JWT expiry
-- Middleware maybe?
-- Remove unused loading states
-- Check active roles
-- Handle 500 requests
-- OrdersObject
-- Set page positive number
-- NestJS user orders count
-
-## Installation
-
+Make sure that back-end (NestJS) is running first as it uses port `3000` and react will prompt to use port `3001`.
 Set the following environment variable in a created `.env` file inside the root folder.
 
 ```bash
-JWT_SECRET=secretKey
+ JWT_SECRET=secretKey
 ```
 
 Install dependencies
 
 ```bash
-$ npm install
+ $ npm install
+```
+
+Run application
+
+```
+ $npm start
 ```
 
 ## Available Scripts

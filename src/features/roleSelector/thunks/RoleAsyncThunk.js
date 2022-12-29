@@ -9,7 +9,8 @@ export const addRoleAsyncThunk = createAsyncThunk(
 	"add-role",
 	async (body, { dispatch }) => {
 		try {
-			const response = await put(ENDPOINTS.ADD_ROLE, body);
+			const { user_id } = body;
+			const response = await put(ENDPOINTS.ADD_ROLE, { user_id });
 			const jsonResponse = await response.json();
 			if (jsonResponse) {
 				dispatch(setSignInActiveRole(body.activeRole));

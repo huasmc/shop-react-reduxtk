@@ -9,7 +9,7 @@ Make sure that back-end (NestJS) is running first as it uses port `3000` and rea
 1. Set the following environment variable in a created `.env` file inside the root folder.
 
 ```bash
- JWT_SECRET=secretKey
+ REACT_APP_JWT_SECRET=secretKey
 ```
 
 2. Install dependencies

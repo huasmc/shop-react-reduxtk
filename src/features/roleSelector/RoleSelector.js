@@ -15,10 +15,13 @@ const RoleSelector = () => {
 	const activeRole = useSelector(selectSignInActiveRole);
 	const dispatch = useDispatch();
 
-	const onChange = useCallback((event) => {
-		const activeRole = event.target.value;
-		dispatch(addRoleAsyncThunk({ user_id: user._id, activeRole }, dispatch));
-	}, []);
+	const onChange = useCallback(
+		(event) => {
+			const activeRole = event.target.value;
+			dispatch(addRoleAsyncThunk({ user_id: user._id, activeRole }, dispatch));
+		},
+		[user, dispatch]
+	);
 
 	return (
 		<FormControl fullWidth>

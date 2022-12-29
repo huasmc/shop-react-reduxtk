@@ -21,8 +21,16 @@ Make sure that back-end (NestJS) is running first as it uses port `3000` and rea
 3. Run application
 
 ```
- $npm start
+ $ npm start
 ```
+
+## Met requirements
+
+- CRUD for shopping orders
+- User role creates, reads orders
+- Admin role reads, updates, deletes orders
+
+Other requirements are met in the NestJS repository.
 
 <p align="center">
   <img src="https://i.imgur.com/wKrE5de.png" alt="Sublime's custom image"/>

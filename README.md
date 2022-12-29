@@ -21,7 +21,7 @@ Make sure that back-end (NestJS) is running first as it uses port `3000` and rea
 3. Run application
 
 ```
- $npm start
+ $ npm start
 ```
 
 <p align="center">

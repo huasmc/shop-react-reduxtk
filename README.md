@@ -2,19 +2,31 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
 
-## Installation
+## How to run
 
-Set the following environment variable in a created `.env` file inside the root folder.
+Make sure that back-end (NestJS) is running first as it uses port `3000` and react will prompt to use another port e.g (`3001`).
 
-```bash
-JWT_SECRET=secretKey
-```
-
-Install dependencies
+1. Set the following environment variable in a created `.env` file inside the root folder.
 
 ```bash
-$ npm install
+ JWT_SECRET=secretKey
 ```
+
+2. Install dependencies
+
+```bash
+ $ npm install
+```
+
+3. Run application
+
+```
+ $npm start
+```
+
+<p align="center">
+  <img src="https://i.imgur.com/wKrE5de.png" alt="Sublime's custom image"/>
+</p>
 
 ## Available Scripts
 

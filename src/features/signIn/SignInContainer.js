@@ -22,9 +22,10 @@ const SignInContainer = () => {
 
 	const onSignInClick = useCallback(async () => {
 		try {
-			dispatch(setAppLoading(true));
-			if (username && password)
+			if (username && password) {
+				dispatch(setAppLoading(true));
 				await dispatch(signInAsyncThunk({ username, password }, dispatch));
+			}
 		} catch (error) {
 			dispatch(setAppLoading(false));
 		}

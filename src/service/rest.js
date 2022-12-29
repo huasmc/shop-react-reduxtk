@@ -27,13 +27,11 @@ export const get = async (url, queryParams, body) => {
 			if (response.ok) {
 				return response;
 			} else {
-				throw new Error();
+				throw new Error(response.statusText);
 			}
 		})
-		.then((response) => {
-			if (response) return response;
-		})
 		.catch((error) => {
+			if (error.message === "Failed to fetch") throw new Error(error);
 			throw new Error(error);
 		});
 };
@@ -48,14 +46,11 @@ export const post = async (url, body) => {
 		.then((response) => {
 			if (response.ok) {
 				return response;
-			} else if (response_status.includes(response.status)) {
+			} else if (response_status.includes(response.statusText)) {
 				return response;
 			} else {
-				throw new Error();
+				throw new Error(response.statusText);
 			}
-		})
-		.then((data) => {
-			if (data) return data;
 		})
 		.catch((error) => {
 			throw new Error(error);
@@ -72,14 +67,11 @@ export const put = async (url, body) => {
 		.then((response) => {
 			if (response.ok) {
 				return response;
-			} else if (response_status.includes(response.status)) {
+			} else if (response_status.includes(response.statusText)) {
 				return response;
 			} else {
-				throw new Error();
+				throw new Error(response.statusText);
 			}
-		})
-		.then((data) => {
-			if (data) return data;
 		})
 		.catch((error) => {
 			throw new Error(error);
@@ -96,14 +88,11 @@ export const remove = async (url, body) => {
 		.then((response) => {
 			if (response.ok) {
 				return response;
-			} else if (response_status.includes(response.status)) {
+			} else if (response_status.includes(response.statusText)) {
 				return response;
 			} else {
-				throw new Error();
+				throw new Error(response.statusText);
 			}
-		})
-		.then((data) => {
-			if (data) return data;
 		})
 		.catch((error) => {
 			throw new Error(error);

@@ -39,14 +39,6 @@ function App() {
 		setBackdropLoading(loading);
 	}, [loading]);
 
-	useEffect(() => {
-		setBackdropLoading(false);
-	}, []);
-
-	window.onload = () => {
-		setBackdropLoading(false);
-	};
-
 	return (
 		<ThemeProvider theme={mainTheme}>
 			<CssBaseline />

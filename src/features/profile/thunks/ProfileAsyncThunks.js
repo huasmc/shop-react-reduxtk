@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { setSnackbarMessage } from "../../../AppSlice";
+import { setAppLoading, setSnackbarMessage } from "../../../AppSlice";
 import { ENDPOINTS } from "../../../service/constants";
 import { put, remove } from "../../../service/rest";
 import { UI_STRINGS } from "../../assets/UI_STRINGS";
@@ -25,6 +25,7 @@ export const updateOrderAsyncThunk = createAsyncThunk(
 			}
 			return await jsonResponse;
 		} catch (error) {
+			dispatch(setAppLoading(false));
 			throw new Error(error);
 		}
 	}
@@ -47,6 +48,9 @@ export const deleteOrderAsyncThunk = createAsyncThunk(
 				};
 				dispatch(getUserOrders(querybody));
 			}
-		} catch (error) {}
+		} catch (error) {
+			dispatch(setAppLoading(false));
+			throw new Error(error);
+		}
 	}
 );

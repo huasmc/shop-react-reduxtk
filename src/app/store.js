@@ -5,6 +5,7 @@ import signInReducer from "../features/signIn/SignInSlice";
 import shopReducer from "../features/shop/ShopSlice";
 import storage from "redux-persist/lib/storage";
 import appReducer from "../AppSlice";
+import requestsAsyncThunkMiddleware from "./middlewares/requestsMiddleWare";
 
 const persistConfig = {
 	key: "root",
@@ -29,7 +30,9 @@ export const store = configureStore(
 	{
 		reducer: persistedReducer,
 		middleware: (getDefaultMiddleware) =>
-			getDefaultMiddleware({ serializableCheck: false }),
+			getDefaultMiddleware({ serializableCheck: false }).concat(
+				requestsAsyncThunkMiddleware
+			),
 	},
 	composeWithDevTools()
 );

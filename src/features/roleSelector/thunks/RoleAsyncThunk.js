@@ -21,7 +21,7 @@ export const addRoleAsyncThunk = createAsyncThunk(
 			}
 			return await jsonResponse;
 		} catch (error) {
-			throw error;
+			throw new Error(error);
 		}
 	}
 );

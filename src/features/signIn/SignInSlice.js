@@ -13,6 +13,7 @@ export const signInAsyncThunk = createAsyncThunk(
 			dispatch(setAppLoading(false));
 			return await response.json();
 		} catch (error) {
+			dispatch(setAppLoading(false));
 			throw new Error(error);
 		}
 	}
@@ -23,18 +24,32 @@ export const signUpAsyncThunk = createAsyncThunk("sign-up", async (body) => {
 	return await response.json();
 });
 
-export const profileAsyncThunk = createAsyncThunk("profile", async (body) => {
-	const response = await post(ENDPOINTS.PROFILE, body);
-	return await response.json();
-});
+export const profileAsyncThunk = createAsyncThunk(
+	"profile",
+	async (body, { dispatch }) => {
+		try {
+			const response = await post(ENDPOINTS.PROFILE, body);
+			dispatch(setAppLoading(false));
+			return await response.json();
+		} catch (error) {
+			dispatch(setAppLoading(false));
+			throw new Error(error);
+		}
+	}
+);
 
 export const getUserOrders = createAsyncThunk(
 	"profile/orders",
 	async (queryParams, { dispatch }) => {
-		const response = await get(ENDPOINTS.USER_ORDERS + "?", queryParams);
-		const data = await response.json();
-		dispatch(setAppLoading(false));
-		return data;
+		try {
+			const response = await get(ENDPOINTS.USER_ORDERS + "?", queryParams);
+			dispatch(setAppLoading(false));
+			const data = await response.json();
+			return data;
+		} catch (error) {
+			dispatch(setAppLoading(false));
+			throw new Error(error);
+		}
 	}
 );
 

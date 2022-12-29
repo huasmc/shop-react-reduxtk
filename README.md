@@ -5,19 +5,20 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## How to run
 
 Make sure that back-end (NestJS) is running first as it uses port `3000` and react will prompt to use another port e.g (`3001`).
-Set the following environment variable in a created `.env` file inside the root folder.
+
+1. Set the following environment variable in a created `.env` file inside the root folder.
 
 ```bash
  JWT_SECRET=secretKey
 ```
 
-Install dependencies
+2. Install dependencies
 
 ```bash
  $ npm install
 ```
 
-Run application
+3. Run application
 
 ```
  $npm start

@@ -6,7 +6,7 @@ const requestsAsyncThunkMiddleware =
 	(next) =>
 	(action) => {
 		if (action.type.endsWith("/rejected")) {
-			dispatch(setSnackbarMessage(UI_STRINGS.SERVER_RUNNING));
+			dispatch(setSnackbarMessage(UI_STRINGS.NOT_AUTHORIZED));
 		}
 		return next(action);
 	};

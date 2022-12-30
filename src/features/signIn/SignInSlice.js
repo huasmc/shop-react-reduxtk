@@ -55,7 +55,7 @@ export const getUserOrders = createAsyncThunk(
 
 const signInSlice = createSlice({
 	name: "signIn",
-	initialState: { user: null, message: "", orders: [] },
+	initialState: { user: { user: {} }, message: "", orders: [] },
 	reducers: {
 		setSignInActiveRole: (state, action) => {
 			state.user.activeRole = action.payload;

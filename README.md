@@ -2,6 +2,8 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
 
+The application can be seen live [here](https://shop-react-reduxtk.herokuapp.com/)
+
 ## How to run
 
 Make sure that back-end (NestJS) is running first as it uses port `3000` and react will prompt to use another port.

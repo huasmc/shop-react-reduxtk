@@ -33,7 +33,8 @@ const OrdersTableComponent = ({
 
 	const getPageCount = () => {
 		const count = ordersObject.count / limit;
-		const roundCount = Math.round(count);
+		const roundCount = Math.ceil(count);
+
 		return !isNaN(roundCount) ? roundCount : 5;
 	};
 	return (
